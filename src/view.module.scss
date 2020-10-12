@@ -3,18 +3,21 @@
     width: 100%;
     min-height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 .logo {
     min-width: 80px;
     min-height: 150px;
-    background-color: green;
+    // background-color: green;
     flex-grow: 4;
     position: absolute;
     top: 2.5%;
     right: 5%;
     display: flex;
     flex-direction: column;
+    animation: increaseOpacity 1s 2.5s ease-in both;
+
 }
 
 .greenFont {
@@ -22,7 +25,16 @@
 }
 
 .icon {
+    margin: 0 auto;
     flex-grow: 1;
+    background-image: url('assets/logo.svg');
+    display: block;
+    text-indent: -9999px;
+    width: 100px;
+    height: 82px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .projectName {
@@ -40,19 +52,19 @@
 
     top: 50%;
     left: 25%;
-
-    transform: translate(-50%, -50%) rotate(45deg);
+   
+    animation: appearFromBottom 2s .5s ease-in both;
+    
 }
 
 .wrapperLogin {
     margin: 0 12px;
     position: absolute;
-    transform: translateY(30%);
-    width: 100%;
-    min-height: 100vh;
+    top: 30%;
     text-align: left;
     z-index: 1;
     font-size: 20px;
+    animation: increaseOpacity 1s 2.5s ease-in both;
 }
 
 .font13 {
@@ -62,4 +74,29 @@
 .marginBottom7 {
     margin-bottom: 7px;
     font-weight: 600;
+}
+
+
+@keyframes increaseOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes appearFromBottom {
+    0% {
+        transform: translate(-25%, 130%) scale(0.5);
+        opacity: 0.5;
+    }
+    70% {
+        transform:  translate(-25%, -50%) scale(0.7) rotate(360deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(405deg) scale(1);
+        opacity: 1;
+
+    }
 }

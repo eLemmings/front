@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.module.scss';
 import styles from './view.module.scss';
-import Button from '@material-ui/core/Button';
+import Button from './components/Button/Button';
 
 const App = () => (
   <div className={styles.wrapper}>
@@ -12,6 +12,7 @@ const App = () => (
     <div className={styles.wrapperLogin}>
       <p className={styles.marginBottom7}>Witaj w Lem<span className={styles.greenFont}>Med</span></p>
       <p className={styles.font13}>Zaloguj się aby kontynuować</p>
+      <Button>Zaloguj się</Button>
     </div>
   </div>
 );
