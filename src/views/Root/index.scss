@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
+
+:root {
+    --primary: #fa7f7f;
+    --secondary: #2cc39d;
+}
+
+html {
+    font-size: 62.5%;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -10,5 +20,6 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-
-
+.smallCaption {
+    font-size: 1rem;
+}
