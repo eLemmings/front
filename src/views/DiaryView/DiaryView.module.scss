@@ -1,0 +1,15 @@
+.diaryLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &__content {
+    font-size: 1.8rem;
+  }
+}
+
+.guideline {
+  height: 1px;
+  opacity: 0.5;
+}
