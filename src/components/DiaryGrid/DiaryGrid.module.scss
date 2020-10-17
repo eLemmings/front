@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px 10px;
+}
+
+.diaryItem {
+  flex-basis: calc(25% - 6px);
+  margin: 3px;
+  background-color: red;
+}
+
+.diaryItem::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.sliderWrapper {
+  background-color: white;
+  position: fixed;
+  padding: 0 50px;
+  left: 0%;
+  right: 0%;
+  bottom: 0;
+}
