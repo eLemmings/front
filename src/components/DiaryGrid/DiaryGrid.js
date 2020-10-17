@@ -11,21 +11,16 @@ class DiaryGrid extends React.Component {
   };
 
   render() {
+    const diary = this.props.diary;
+    const entries = [].concat.apply([], diary.entries);
     return (
       <>
         <div className={styles.wrapper}>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
-          <div className={styles.diaryItem}></div>
+          {entries.map((entry, index) => (
+            <div className={styles.diaryItem} key={index}>
+              {entry}
+            </div>
+          ))}
         </div>
         <div className={styles.sliderWrapper}>
           <Slider
