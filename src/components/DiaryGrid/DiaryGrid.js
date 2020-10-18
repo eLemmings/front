@@ -49,8 +49,20 @@ class DiaryGrid extends React.Component {
                 onClick={this.handlePixelClick}
               ></div>
               <div className="diaryItemManage">
-                <button onClick={this.handlePixelClose}>close</button>
-                <p>{entry.desc}</p>
+                <div
+                  className={styles.boxManage}
+                  style={{ backgroundColor: diary.colors[entry.value] }}
+                ></div>
+                <p className={styles.diaryDesc}>
+                  <span></span>
+                  {entry.desc}
+                </p>
+                <button
+                  onClick={this.handlePixelClose}
+                  className={styles.itemManageClose}
+                >
+                  X
+                </button>
               </div>
             </>
           ))}

@@ -7,11 +7,23 @@
 .diaryItem {
   flex-basis: calc(25% - 6px);
   margin: 3px;
-  background-color: red;
   animation: increase 0.3s ease-in-out both;
+  outline: 1px solid black;
 }
 
 .diaryItem::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.boxManage {
+  width: 50%;
+  outline: 1px solid black;
+  margin: 2em auto;
+}
+
+.boxManage::before {
   content: "";
   display: block;
   padding-top: 100%;
@@ -26,9 +38,26 @@
   bottom: 0;
 }
 
+.itemManageClose {
+  background-color: none;
+  font-size: 50px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  position: fixed;
+  bottom: 7vw;
+  right: 7vw;
+}
+
+.diaryDesc {
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
 @keyframes increase {
   from {
-    transform: translateX(-10px);
+    transform: translateX(-5px);
   }
   to {
     transform: translateX(0);

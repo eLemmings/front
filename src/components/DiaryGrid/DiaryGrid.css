@@ -9,7 +9,7 @@
   z-index: 15;
   transition: 0.5s;
 
-  transform: translateY(-100%);
+  transform: translateY(-105%);
 }
 
 .diaryItemManageActive {
@@ -21,7 +21,7 @@
   background-color: #ffffff;
   opacity: 0.95;
   z-index: 15;
+  transition: 0.5s;
 
   transform: translateY(0);
-  transition: 0.5s;
 }
