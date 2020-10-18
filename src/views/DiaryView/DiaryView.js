@@ -1,6 +1,5 @@
 import React from "react";
 import Menu from "../../components/Menu/Menu";
-import { Grid } from "@material-ui/core";
 import styles from "./DiaryView.module.scss";
 import DiaryGrid from "../../components/DiaryGrid/DiaryGrid";
 import retrievedDiaries from "../../data/diariesData";
@@ -36,34 +35,32 @@ class DiaryView extends React.Component {
 
   render() {
     const diary = this.state.diaries[this.state.activeDiary];
+    const titles = [];
+    for (const title of this.state.diaries) {
+      titles.push(title.name);
+    }
     return (
       <div className={styles.wrapper} key={diary.name}>
-        <Grid container>
-          <Grid item xs={1}>
-            <Menu />
-          </Grid>
-          <Grid item xs={9}>
-            <div className={styles.diaryLabel}>
-              <p className={styles.diaryLabel__content}>{diary.name}</p>
-            </div>
-          </Grid>
-          <Grid item xs={1}>
-            <div className={styles.center}>
-              <button onClick={() => this.changeDiary("prev")}>&lt;</button>
-            </div>
-          </Grid>
-          <Grid item xs={1}>
-            <div className={styles.center}>
-              <button onClick={() => this.changeDiary("next")}>&gt;</button>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <hr className={styles.guideline}></hr>
-          </Grid>
-          <Grid item xs={12}>
-            <DiaryGrid diary={diary} />
-          </Grid>
-        </Grid>
+        <div className={styles.topBar}>
+          <Menu />
+          <div className={styles.center}>
+            <button
+              className={styles.button}
+              onClick={() => this.changeDiary("prev")}
+            >
+              &lt;
+            </button>
+            <p>{diary.name}</p>
+            <button
+              className={styles.button}
+              onClick={() => this.changeDiary("next")}
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+        <hr className={styles.guideline}></hr>
+        <DiaryGrid diary={diary} />
       </div>
     );
   }

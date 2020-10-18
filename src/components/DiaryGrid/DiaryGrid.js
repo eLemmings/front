@@ -1,6 +1,7 @@
 import { Slider } from "@material-ui/core";
 import React from "react";
 import styles from "./DiaryGrid.module.scss";
+import "./DiaryGrid.css";
 
 class DiaryGrid extends React.Component {
   handleSliderChange = (e, value) => {
@@ -10,16 +11,48 @@ class DiaryGrid extends React.Component {
     });
   };
 
+  handlePixelClick = (e) => {
+    const menu = e.target.nextSibling;
+    if (menu.className.includes("Active")) {
+      menu.className = "diaryItemManage";
+    } else {
+      menu.className = "diaryItemManageActive";
+    }
+  };
+
+  handlePixelClose = (e) => {
+    const menu = e.target.parentNode;
+    if (menu.className.includes("Active")) {
+      menu.className = "diaryItemManage";
+    } else {
+      menu.className = "diaryItemManageActive";
+    }
+  };
+
   render() {
     const diary = this.props.diary;
-    const entries = [].concat.apply([], diary.entries);
+    const entries = [];
+    for (const entry of diary.entries) {
+      for (const o of entry) {
+        entries.push({ value: o.value, desc: o.description });
+      }
+    }
     return (
       <>
         <div className={styles.wrapper}>
           {entries.map((entry, index) => (
-            <div className={styles.diaryItem} key={index}>
-              {entry}
-            </div>
+            <>
+              <div
+                className={styles.diaryItem}
+                key={index}
+                style={{ backgroundColor: diary.colors[entry.value] }}
+                onClick={this.handlePixelClick}
+              ></div>
+              <div className="diaryItemManage">
+                <button onClick={this.handlePixelClose}>close</button>
+                <p>{entry.desc}</p>
+              </div>
+            </>
           ))}
         </div>
         <div className={styles.sliderWrapper}>

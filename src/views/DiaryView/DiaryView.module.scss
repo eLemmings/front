@@ -1,19 +1,23 @@
 .wrapper {
   width: 100%;
+  position: relative;
   min-height: 100vh;
-  overflow: hidden;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  border: none;
+  outline: none;
+  padding: 5px 10px;
 }
 
 .diaryLabel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  position: relative;
-
-  &__content {
-    font-size: 1.8rem;
-  }
+  font-size: 1.8rem;
+  padding: 0 20px;
 }
 
 .guideline {
