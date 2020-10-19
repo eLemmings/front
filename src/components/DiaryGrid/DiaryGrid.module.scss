@@ -7,7 +7,6 @@
 .diaryItem {
   flex-basis: calc(25% - 6px);
   margin: 3px;
-  animation: increase 0.3s ease-in-out both;
   outline: 1px solid black;
 }
 
@@ -29,15 +28,6 @@
   padding-top: 100%;
 }
 
-.sliderWrapper {
-  background-color: white;
-  position: fixed;
-  padding: 0 50px;
-  left: 0%;
-  right: 0%;
-  bottom: 0;
-}
-
 .itemManageClose {
   background-color: none;
   font-size: 50px;
@@ -53,13 +43,4 @@
   padding: 20px;
   font-size: 20px;
   text-align: center;
-}
-
-@keyframes increase {
-  from {
-    transform: translateX(-5px);
-  }
-  to {
-    transform: translateX(0);
-  }
 }

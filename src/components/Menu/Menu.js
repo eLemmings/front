@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Menu.module.scss";
+import Button from "../Button/Button";
 
 class Menu extends React.Component {
   state = {
@@ -27,15 +28,13 @@ class Menu extends React.Component {
         </button>
         <nav className={styles.nav}>
           <ul className={styles.list}>
-            <li className={styles.item}>
-              <button className={styles.link}>Add new record</button>
-            </li>
-            <li className={styles.item}>
-              <button className={styles.link}>View diares</button>
-            </li>
-            <li className={styles.item}>
-              <button className={styles.link}>Share diary</button>
-            </li>
+            {Object.keys(this.props.options).map((option) => (
+              <li className={styles.item}>
+                <Button handleFn={this.props.options[option].fn}>
+                  {this.props.options[option].title}
+                </Button>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

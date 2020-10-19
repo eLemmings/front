@@ -1,0 +1,48 @@
+.pixel {
+  flex-basis: calc(25% - 6px);
+  margin: 3px;
+  outline: 1px solid black;
+}
+
+.pixel::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.editor {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(#ffffff, 0.9);
+  z-index: 15;
+  transition: 0.5s;
+
+  transform: translateY(-105%);
+}
+
+.editorActive {
+  @extend .editor;
+
+  transform: translateY(0);
+}
+
+.editorPixel {
+  width: 50%;
+  outline: 1px solid black;
+  margin: 2em auto;
+}
+
+.editorPixel::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.desc {
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 2em;
+}
