@@ -1,26 +1,30 @@
 import React from "react";
 import styles from "./Menu.module.scss";
-import Button from "../Button/Button";
+import MenuItem from "./MenuItem/MenuItem";
 
 class Menu extends React.Component {
   state = {
     active: false,
   };
 
-  toggleState = () => {
+  handleToggle = () => {
     this.setState((prevState) => ({
       active: !prevState.active,
     }));
+    if (!this.state.active) {
+      this.props.options.addDiary.fn();
+    }
   };
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <button
           className={
             this.state.active ? styles.burgerActive : styles.burgerWrapper
           }
-          onClick={this.toggleState}
+          onClick={this.handleToggle}
         >
           <span className={styles.burgerBox}>
             <span className={styles.burgerInner}></span>
@@ -28,13 +32,13 @@ class Menu extends React.Component {
         </button>
         <nav className={styles.nav}>
           <ul className={styles.list}>
-            {Object.keys(this.props.options).map((option) => (
-              <li className={styles.item}>
-                <Button handleFn={this.props.options[option].fn}>
-                  {this.props.options[option].title}
-                </Button>
-              </li>
-            ))}
+            {this.props.activeItem ? (
+              <MenuItem option={this.props.activeItem} active />
+            ) : (
+              Object.keys(this.props.options).map((option) => (
+                <MenuItem option={this.props.options[option]} />
+              ))
+            )}
           </ul>
         </nav>
       </div>

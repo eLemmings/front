@@ -10,6 +10,68 @@ class DiaryView extends React.Component {
     diaries: [...retrievedDiaries], // Retrieved from database
     activeDiary: 0,
     sliderValue: 4,
+    activeMenuItem: false,
+  };
+
+  addDiary = (e) => {
+    if (e) {
+      e.preventDefault();
+      this.setState({
+        activeMenuItem: this.topBarOptions.addDiary,
+      });
+
+      if (e.target[0]) {
+        const diary = {
+          name: "",
+          colors: ["#ff0000", "#00ff00", "#098ab3", "#ae4582", "#975bca"],
+          max: 0,
+          entries: [
+            [
+              {
+                value: 1,
+                description: "Nie zjadłem śniadania",
+              },
+              {
+                value: 2,
+                description: "Uciekłem z ostatniej lekcji",
+              },
+              {
+                value: 5,
+                description: "Pomogłem Mamie zrobić obiad",
+              },
+              {
+                value: 1,
+                description: "Przed snem bolała mnie głowa",
+              },
+            ],
+          ],
+        };
+
+        diary.name = e.target[0].value;
+        diary.max = e.target[2].value;
+
+        this.setState((prevState) => ({
+          activeMenuItem: false,
+          diaries: [...prevState.diaries, diary],
+          activeDiary: this.state.diaries.length,
+        }));
+      }
+    } else {
+      this.setState((prevState) => ({
+        activeMenuItem: false,
+      }));
+    }
+  };
+
+  viewDiaries = () => {
+    this.setState({
+      activeMenuItem: this.topBarOptions.viewDiaries,
+    });
+  };
+
+  topBarOptions = {
+    addDiary: { fn: this.addDiary, title: "Dodaj dziennik" },
+    logOut: { fn: undefined, title: "Wyloguj" },
   };
 
   // getData = async () => {
@@ -27,6 +89,7 @@ class DiaryView extends React.Component {
   };
 
   changeDiary = (direction) => {
+    // Change diary from next to previous with arrows
     if (direction === "next") {
       if (this.state.activeDiary + 1 !== this.state.diaries.length)
         this.setState((prevState) => ({
@@ -41,28 +104,16 @@ class DiaryView extends React.Component {
     }
   };
 
-  addDiary = () => {
-    console.log("adding diary");
-  };
-
-  viewDiaries = () => {
-    console.log("viewing diaries");
-  };
-
   render() {
     const diary = this.state.diaries[this.state.activeDiary];
-    const topBarOptions = {
-      addDiary: { fn: this.addDiary, title: "Dodaj dziennik" },
-      viewDiaries: { fn: this.viewDiaries, title: "Zobacz dzienniki" },
-      logOut: { fn: undefined, title: "Wyloguj" },
-    };
 
     return (
       <div className={styles.wrapper} key={diary.name}>
         <TopBar
+          activeItem={this.state.activeMenuItem}
           handleChangeFn={this.changeDiary}
           title={diary.name}
-          options={topBarOptions}
+          options={this.topBarOptions}
         />
         <hr className={styles.guideline}></hr>
         <DiaryGrid diary={diary} sliderValue={this.state.sliderValue} />

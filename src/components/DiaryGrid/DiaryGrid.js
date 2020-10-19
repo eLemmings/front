@@ -4,7 +4,7 @@ import Pixel from "../Pixel/Pixel";
 
 class DiaryGrid extends React.Component {
   state = {
-    diary: undefined, // push to database
+    diary: this.props.diary, // push to database
   };
 
   updatePixel = () => {};
