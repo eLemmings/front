@@ -1,0 +1,9 @@
+tests/
+node_modules/
+
+.git/
+.gitignore
+
+docs/
+LICENSE
+README.md
