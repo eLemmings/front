@@ -1,35 +1,34 @@
 import React from "react";
 import styles from "./scss/Pixel.module.scss";
-import PixelMenu from "./PixelMenu";
 
 class Pixel extends React.Component {
-	state = {
-		active: false,
-	};
+	calcFlexBasis = () => {
+		return `calc(${100 / this.props.pixelSize}% - 6px)`;
+	}
 
-	handleToggle = () => {
-		this.setState({active: !this.state.active});
-	};
+	renderPixel = () => {
+		return (
+		<div
+			className={styles.pixel}
+			style={{
+				backgroundColor: this.props.color,
+				flexBasis: this.calcFlexBasis(),
+			}}
+			onClick={(e) => {this.props.handleOpenPixelEdit(e, this.props.index)}}
+		></div>);
+	}
+
+	renderAddPixel = () => {
+		return (
+		<div
+			className={styles.pixel}
+			style={{ flexBasis: this.calcFlexBasis() }}
+			onClick={(e) => {this.props.handleOpenPixelAdd(e, true)}}
+		></div>);
+	}
 
 	render() {
-		return (
-			<>
-				<div
-					className={styles.pixel}
-					style={{
-						backgroundColor: this.props.entry.color,
-						flexBasis: `calc(${100 / this.props.pixelSize}% - 6px)`,
-					}}
-					onClick={this.handleToggle}
-				></div>
-				{this.state.active && (
-					<PixelMenu
-						entry={this.props.entry}
-						handleToggle={this.handleToggle}
-					></PixelMenu>
-				)}
-			</>
-		);
+		return this.props.addPixel ? this.renderAddPixel() : this.renderPixel();
 	}
 }
 

@@ -1,46 +1,45 @@
 .pixel {
-  flex-basis: calc(25% - 6px);
-  border-radius: 10%;
-  margin: 3px;
-  box-shadow: 1px 1px 5px 0px rgb(0,0,0);
+	flex-basis: calc(25% - 6px);
+	border-radius: 10%;
+	margin: 3px;
+	box-shadow: 1px 1px 3px 0px rgb(0, 0, 0);
 }
 
 .pixel::before {
-  content: "";
-  display: block;
-  padding-top: 100%;
+	content: "";
+	display: block;
+	padding-top: 100%;
 }
 
 .editor {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-items: center;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(#ffffff, 0.9);
-  z-index: 15;
-  transition: 0.4s;
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-items: center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(#ffffff, 0.9);
+	z-index: 15;
 }
 
 .editorPixel {
-  border-radius: 10%;
-  box-shadow: 1px 1px 5px 0px rgb(0,0,0);
-  width: 50%;
-  margin: 2em auto;
+	border-radius: 10%;
+	box-shadow: 1px 1px 5px 0px rgb(0, 0, 0);
+	width: 50%;
+	margin: 2em auto;
 }
 
 .editorPixel::before {
-  content: "";
-  display: block;
-  padding-top: 100%;
+	content: "";
+	display: block;
+	padding-top: 100%;
 }
 
 .desc {
-  text-align: center;
-  padding: 10px 20px;
-  font-size: 2em;
+	text-align: center;
+	padding: 10px 20px;
+	font-size: 2em;
 }

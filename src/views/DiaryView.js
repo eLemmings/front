@@ -4,132 +4,83 @@ import DiaryGrid from "../components/DiaryGrid";
 import retrievedDiaries from "../data/diariesData";
 import { Slider } from "@material-ui/core";
 import TopBar from "../components/TopBar";
+import PixelEditMenu from "../components/PixelEditMenu";
+import PixelAddMenu from "../components/PixelAddMenu";
 
 class DiaryView extends React.Component {
-  state = {
-    diaries: [...retrievedDiaries], // Retrieved from database
-    activeDiary: 0,
-    sliderValue: 4,
-    activeMenuItem: false,
-  };
+	state = {
+		diaries: retrievedDiaries,
+		activeDiary: 0,
+		activeEntry: 0,
+		pixelEditOpened: false,
+		pixelAddOpened: false,
+		sliderValue: 4,
+	};
 
-  addDiary = (e) => {
-    if (e) {
-      e.preventDefault();
-      this.setState({
-        activeMenuItem: this.topBarOptions.addDiary,
-      });
+	handleSliderChange = (e, value) => {
+		this.setState({ sliderValue: value });
+	};
 
-      if (e.target[0]) {
-        const diary = {
-          name: "",
-          colors: ["#ff0000", "#00ff00", "#098ab3", "#ae4582", "#975bca"],
-          max: 0,
-          entries: [
-            [
-              {
-                value: 1,
-                description: "Nie zjadłem śniadania",
-              },
-              {
-                value: 2,
-                description: "Uciekłem z ostatniej lekcji",
-              },
-              {
-                value: 5,
-                description: "Pomogłem Mamie zrobić obiad",
-              },
-              {
-                value: 1,
-                description: "Przed snem bolała mnie głowa",
-              },
-            ],
-          ],
-        };
+	setPixelEdit = (e, v, index) => {
+		this.setState({ activeEntry: index });
+		this.setState({ pixelEditOpened: v });
+	}
 
-        diary.name = e.target[0].value;
-        diary.max = e.target[2].value;
+	setPixelAdd = (e, v) => {
+		this.setState({ pixelAddOpened: v });
+	}
 
-        this.setState((prevState) => ({
-          activeMenuItem: false,
-          diaries: [...prevState.diaries, diary],
-          activeDiary: this.state.diaries.length,
-        }));
-      }
-    } else {
-      this.setState((prevState) => ({
-        activeMenuItem: false,
-      }));
-    }
-  };
+	changeDiary = (v) => {
+		if (0 <= this.state.activeDiary + v &&
+			this.state.activeDiary + v < this.state.diaries.length)
+			this.setState({ activeDiary: this.state.activeDiary + v });
+	};
 
-  viewDiaries = () => {
-    this.setState({
-      activeMenuItem: this.topBarOptions.viewDiaries,
-    });
-  };
+	activeEntryColor = () => {
+		let diary = this.state.diaries[this.state.activeDiary];
+		return diary.colors[diary.entries[this.state.activeEntry].value-1];
+	}
 
-  topBarOptions = {
-    addDiary: { fn: this.addDiary, title: "Dodaj dziennik" },
-    logOut: { fn: undefined, title: "Wyloguj" },
-  };
-
-  // getData = async () => {
-  //   const url = "http://localhost:8887/diariesData.json";
-  //   const response = await fetch(url);
-  //   const data = await response.json();
-  //   console.log(data);
-  // };
-
-  handleSliderChange = (e, value) => {
-    // Handle and pass only value change
-    this.setState(() => ({
-      sliderValue: value,
-    }));
-  };
-
-  changeDiary = (direction) => {
-    // Change diary from next to previous with arrows
-    if (direction === "next") {
-      if (this.state.activeDiary + 1 !== this.state.diaries.length)
-        this.setState((prevState) => ({
-          activeDiary: prevState.activeDiary + 1,
-        }));
-    } else {
-      if (this.state.activeDiary - 1 >= 0) {
-        this.setState((prevState) => ({
-          activeDiary: prevState.activeDiary - 1,
-        }));
-      }
-    }
-  };
-
-  render() {
-    const diary = this.state.diaries[this.state.activeDiary];
-
-    return (
-      <div className={styles.wrapper} key={diary.name}>
-        <TopBar
-          activeItem={this.state.activeMenuItem}
-          handleChangeFn={this.changeDiary}
-          title={diary.name}
-          options={this.topBarOptions}
-        />
-        <hr className={styles.guideline}></hr>
-        <DiaryGrid diary={diary} sliderValue={this.state.sliderValue} />
-        <div className={styles.sliderWrapper}>
-          <Slider
-            defaultValue={this.state.sliderValue}
-            aria-labelledby="discrete-slider"
-            step={1}
-            min={2}
-            max={10}
-            onChange={this.handleSliderChange}
-          />
-        </div>
-      </div>
-    );
-  }
+	render() {
+		const diary = this.state.diaries[this.state.activeDiary];
+		return (
+			<div className={styles.wrapper}>
+				<TopBar
+					handleChangeFn={this.changeDiary}
+					title={diary.name}
+				/>
+				<hr className={styles.guideline}></hr>
+				<DiaryGrid
+					diary={diary}
+					pixelSize={this.state.sliderValue}
+					handleOpenPixelAdd={(e) => {this.setPixelAdd(e, true)}}
+					handleOpenPixelEdit={(e, index) => {this.setPixelEdit(e, true, index)}}
+				/>
+				<div className={styles.sliderWrapper}>
+					<Slider
+						defaultValue={this.state.sliderValue}
+						aria-labelledby="discrete-slider"
+						step={1}
+						min={2}
+						max={10}
+						onChange={this.handleSliderChange}
+					/>
+				</div>
+				{this.state.pixelEditOpened && 
+					<PixelEditMenu
+						handleMenuClose={(e) => {this.setPixelEdit(e, false, this.state.activeEntry)}}
+						color={this.activeEntryColor()}
+						entry={diary.entries[this.state.activeEntry]}
+					></PixelEditMenu>
+				}
+				{this.state.pixelAddOpened && 
+					<PixelAddMenu
+						handleMenuClose={(e) => {this.setPixelAdd(e, false)}}
+					></PixelAddMenu>
+				}
+			</div>
+		);
+	}
 }
 
 export default DiaryView;
