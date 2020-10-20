@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import styles from "./scss/TopBar.module.scss";
-import Menu from "./Menu";
+// import Menu from "./Menu";
 
 class TopBar extends React.Component {
 	render() {
