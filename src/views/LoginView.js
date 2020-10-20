@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./LoginView.module.scss";
-import Logo from "../../components/Logo/Logo";
+import styles from "./scss/LoginView.module.scss";
+import Logo from "../components/Logo";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { TextField, Grid, Link, Button } from "@material-ui/core";
 

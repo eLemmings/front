@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../../Button/Button";
-import styles from "./MenuItem.module.scss";
-import Form from "../../Form/Form";
+import Button from "./Button";
+import styles from "./scss/MenuItem.module.scss";
+import Form from "./Form";
 
 const MenuItem = ({ option, active }) => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Logo.module.scss';
-import logoIcon from '../../assets/logo.svg';
+import styles from './scss/Logo.module.scss';
+import logoIcon from '../assets/logo.svg';
 
 const Logo = () => (
     <div className={styles.wrapper}>

@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./DiaryView.module.scss";
-import DiaryGrid from "../../components/DiaryGrid/DiaryGrid";
-import retrievedDiaries from "../../data/diariesData";
+import styles from "./scss/DiaryView.module.scss";
+import DiaryGrid from "../components/DiaryGrid";
+import retrievedDiaries from "../data/diariesData";
 import { Slider } from "@material-ui/core";
-import TopBar from "../../components/TopBar/TopBar";
+import TopBar from "../components/TopBar";
 
 class DiaryView extends React.Component {
   state = {

@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./Pixel.module.scss";
-import Button from "../Button/Button";
+import styles from "./scss/Pixel.module.scss";
+import Button from "./Button";
 
 class Pixel extends React.Component {
   state = {

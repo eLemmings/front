@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./DiaryGrid.module.scss";
-import Pixel from "../Pixel/Pixel";
+import styles from "./scss/DiaryGrid.module.scss";
+import Pixel from "./Pixel";
 
 class DiaryGrid extends React.Component {
   state = {

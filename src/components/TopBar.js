@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../Button/Button";
-import styles from "./TopBar.module.scss";
-import Menu from "../Menu/Menu";
+import Button from "./Button";
+import styles from "./scss/TopBar.module.scss";
+import Menu from "./Menu";
 
 const TopBar = ({ handleChangeFn, title, options, activeItem }) => {
   return (

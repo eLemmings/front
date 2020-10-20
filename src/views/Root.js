@@ -1,9 +1,9 @@
 import React from "react";
-import "./index.scss";
-import LoginView from "../LoginView/LoginView";
+import "./scss/index.scss";
+import LoginView from "./LoginView";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import DiaryView from "../DiaryView/DiaryView";
-import RegisterView from "../RegisterView/RegisterView";
+import DiaryView from "./DiaryView";
+import RegisterView from "./RegisterView";
 
 const Root = () => (
   <BrowserRouter>

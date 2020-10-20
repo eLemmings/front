@@ -1,4 +1,4 @@
-import Root from './views/Root/Root';
+import Root from './views/Root';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
