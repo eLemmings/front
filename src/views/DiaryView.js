@@ -6,6 +6,8 @@ import { Slider } from "@material-ui/core";
 import TopBar from "../components/TopBar";
 import PixelEditMenu from "../components/PixelEditMenu";
 import PixelAddMenu from "../components/PixelAddMenu";
+import MenuItem from "../components/MenuItem";
+import Button from "../components/Button";
 
 class DiaryView extends React.Component {
 	state = {
@@ -48,6 +50,13 @@ class DiaryView extends React.Component {
 				<TopBar
 					handleChangeFn={this.changeDiary}
 					title={diary.name}
+					menuItems={[
+						<MenuItem item={<Button>Wyloguj się</Button>}/>,
+						<MenuItem item={<Button>Wyloguj się</Button>}/>,
+						<MenuItem item={<Button>Wyloguj się</Button>}/>,
+						<MenuItem item={<Button>Wyloguj się</Button>}/>,
+						<MenuItem item={<Button>Wyloguj się</Button>}/>,
+					]}
 				/>
 				<hr className={styles.guideline}></hr>
 				<DiaryGrid

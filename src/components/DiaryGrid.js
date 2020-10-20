@@ -8,6 +8,7 @@ class DiaryGrid extends React.Component {
 			<div className={styles.wrapper}>
 				{this.props.diary.entries.map((entry, index) => (
 					<Pixel
+						key={index}
 						index={index}
 						color={this.props.diary.colors[entry.value-1]}
 						pixelSize={this.props.pixelSize}

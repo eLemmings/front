@@ -3,17 +3,19 @@ import Button from "./Button";
 import styles from "./scss/TopBar.module.scss";
 import Menu from "./Menu";
 
-const TopBar = ({ handleChangeFn, title, options, activeItem }) => {
-	return (
-		<div className={styles.wrapper}>
-			{/* <Menu options={options} activeItem={activeItem} /> */}
-			<div className={styles.center}>
-				<Button handleFn={() => handleChangeFn(-1)}>&lt;</Button>
-				<p>{title}</p>
-				<Button handleFn={() => handleChangeFn(1)}>&gt;</Button>
+class TopBar extends React.Component {
+	render() {
+		return (
+			<div className={styles.wrapper}>
+				<Menu menuItems={this.props.menuItems} />
+				<div className={styles.center}>
+					<Button handleFn={() => this.props.handleChangeFn(-1)}>&lt;</Button>
+					<p>{this.props.title}</p>
+					<Button handleFn={() => this.props.handleChangeFn(1)}>&gt;</Button>
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 };
 
 export default TopBar;
