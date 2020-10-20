@@ -1,44 +1,36 @@
 import React from "react";
 import styles from "./scss/Pixel.module.scss";
-import Button from "./Button";
+import PixelMenu from "./PixelMenu";
 
 class Pixel extends React.Component {
-  state = {
-    active: false,
-  };
+	state = {
+		active: false,
+	};
 
-  handleToggle = () => {
-    this.setState((prevState) => ({
-      active: !prevState.active,
-    }));
-  };
+	handleToggle = () => {
+		this.setState({active: !this.state.active});
+	};
 
-  editPixel = () => {};
-
-  render() {
-    return (
-      <>
-        <div
-          className={styles.pixel}
-          style={{
-            backgroundColor: this.props.entry.color,
-            flexBasis: `calc(${100 / this.props.pixelSize}% - 6px)`,
-          }}
-          onClick={this.handleToggle}
-        ></div>
-        <div
-          className={this.state.active ? styles.editorActive : styles.editor}
-        >
-          <div
-            className={styles.editorPixel}
-            style={{ backgroundColor: this.props.entry.color }}
-          ></div>
-          <p className={styles.desc}>{this.props.entry.description}</p>
-          <Button handleFn={this.handleToggle}>zamknij</Button>
-        </div>
-      </>
-    );
-  }
+	render() {
+		return (
+			<>
+				<div
+					className={styles.pixel}
+					style={{
+						backgroundColor: this.props.entry.color,
+						flexBasis: `calc(${100 / this.props.pixelSize}% - 6px)`,
+					}}
+					onClick={this.handleToggle}
+				></div>
+				{this.state.active && (
+					<PixelMenu
+						entry={this.props.entry}
+						handleToggle={this.handleToggle}
+					></PixelMenu>
+				)}
+			</>
+		);
+	}
 }
 
 export default Pixel;
