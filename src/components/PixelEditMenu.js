@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./scss/Pixel.module.scss";
-import Button from "./Button";
+import Button from "@material-ui/core/Button";
 
 class PixelEditMenu extends React.Component {
 	render() {
@@ -11,7 +11,22 @@ class PixelEditMenu extends React.Component {
 					style={{ backgroundColor: this.props.color }}
 				></div>
 				<p className={styles.desc}>{this.props.entry.description}</p>
-				<Button handleFn={this.props.handleMenuClose}>zamknij</Button>
+				<Button
+					size="large"
+					onClick={this.props.handleMenuClose}
+					variant="contained"
+					color="primary"
+				>
+					Zamknij
+				</Button>
+				<Button
+					size="large"
+					onClick={this.props.handleMenuClose}
+					variant="contained"
+					color="secondary"
+				>
+					Gotowe
+				</Button>
 			</div>
 		);
 	}

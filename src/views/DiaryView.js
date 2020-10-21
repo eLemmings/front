@@ -32,6 +32,12 @@ class DiaryView extends React.Component {
 		this.setState({ pixelAddOpened: v });
 	}
 
+	addPixel = (p) => {
+		var st = this.state;
+		st.diaries[this.state.activeDiary].entries.push({value: 2, description: 'xxx'});
+		this.setState(st);
+	}
+
 	changeDiary = (v) => {
 		if (0 <= this.state.activeDiary + v &&
 			this.state.activeDiary + v < this.state.diaries.length)
@@ -52,13 +58,9 @@ class DiaryView extends React.Component {
 					title={diary.name}
 					menuItems={[
 						<MenuItem item={<Button>Wyloguj się</Button>}/>,
-						<MenuItem item={<Button>Wyloguj się</Button>}/>,
-						<MenuItem item={<Button>Wyloguj się</Button>}/>,
-						<MenuItem item={<Button>Wyloguj się</Button>}/>,
-						<MenuItem item={<Button>Wyloguj się</Button>}/>,
+						<MenuItem item={<Button>Usuń konto</Button>}/>,
 					]}
 				/>
-				<hr className={styles.guideline}></hr>
 				<DiaryGrid
 					diary={diary}
 					pixelSize={this.state.sliderValue}
