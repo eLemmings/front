@@ -47,18 +47,16 @@ class DiaryView extends React.Component {
     return diary.colors[diary.entries[this.state.activeEntry].value - 1];
   };
 
-  x(d) {
-    console.log(d);
-  }
-
   render() {
     const api = new API("http://127.0.0.1:5000");
-    api.getUserData(this.x);
-    return this.renderNoAccess();
+    api.getUserData((d) => {
+      console.log(d);
+    });
+    return this.renderAccess();
   }
 
   renderNoAccess() {
-    return <div> no access</div>;
+    return <div>no access</div>;
   }
 
   renderAccess() {

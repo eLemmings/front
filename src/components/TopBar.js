@@ -7,7 +7,12 @@ import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   arrow: {
-    fontSize: "1.5rem",
+    fontSize: "2rem",
+  },
+  wrapper: {
+    width: "60%",
+    margin: "0 auto",
+    position: "relative",
   },
 }));
 
@@ -15,9 +20,9 @@ const TopBar = (props) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Grid container xs={2}></Grid>
-      <Grid container alignItems="center" justify="space-around" xs={8}>
+    <div className={classes.wrapper}>
+      <Menu menuItems={props.menuItems} />
+      <Grid container alignItems="center" justify="space-between">
         <Grid item>
           <Button
             onClick={() => props.handleChangeFn(1)}
@@ -26,8 +31,8 @@ const TopBar = (props) => {
             &lt;
           </Button>
         </Grid>
-        <Grid item m={6}>
-          <Typography variant="h5" component="h1">
+        <Grid item>
+          <Typography variant="h4" component="h1">
             {props.title}
           </Typography>
         </Grid>
@@ -40,7 +45,6 @@ const TopBar = (props) => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container xs={2}></Grid>
     </div>
   );
 };

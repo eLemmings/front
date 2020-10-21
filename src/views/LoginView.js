@@ -40,16 +40,10 @@ const LoginView = () => {
     e.preventDefault();
 
     const Api = new API("http://127.0.0.1:5000");
-    Api.loginUser(email, password)
-      .then((data) => {
-        data = JSON.parse(data);
-        setCookie("token", data.token, 3);
-        getCookie("token");
-        history.push("/diaries");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    Api.loginUser(email, password).then((data) => {
+      setCookie("token", data.token, 3);
+      history.push("/diaries");
+    });
   };
 
   return (

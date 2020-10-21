@@ -44,7 +44,7 @@ const RegisterView = () => {
     Api.registerUser(login, email, password)
       .then((data) => {
         console.log(data);
-        history.push("/");
+        // history.push("/");
       })
       .catch((error) => {
         console.log(error);

@@ -8,11 +8,15 @@ export class API {
       return fetch(`${this.url}/${endpoint}`, {
         method: method,
         headers: {
-          Authorization: "Bearer: " + getCookie("token"),
+          Authorization: "Bearer " + getCookie("token"),
         },
       })
         .then((response) => response.json())
-        .then((data) => handler(data))
+        .then((data) => {
+          console.log(data);
+          handler(data);
+          return data;
+        })
         .catch((error) => error);
     }
     return fetch(`${this.url}/${endpoint}`, {
@@ -24,7 +28,11 @@ export class API {
       },
     })
       .then((response) => response.json())
-      .then((data) => handler(data))
+      .then((data) => {
+        console.log(data);
+        handler(data);
+        return data;
+      })
       .catch((error) => error);
   }
 
