@@ -10,7 +10,7 @@ const Root = () => (
     <>
       <Switch>
         <Route exact path="/" component={LoginView} />
-        <Route path="/diares" component={DiaryView} />
+        <Route path="/diaries" component={DiaryView} />
         <Route path="/register" component={RegisterView} />
       </Switch>
     </>

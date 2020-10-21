@@ -1,88 +1,112 @@
-import React from "react";
-import styles from "./scss/LoginView.module.scss";
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Logo from "../components/Logo";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { TextField, Grid, Link, Button } from "@material-ui/core";
-import "./scss/global.scss";
+import { useHistory } from "react-router-dom";
+import API from "../API";
 
-class LoginView extends React.Component {
-  state = {
-    text: "",
-  };
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
-  handleSubmit = (e) => {
+const LoginView = () => {
+  const history = useHistory();
+  const classes = useStyles(); //siema eniu jak leci ? gitarka<333 ciesze sue bardzo
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    this.props.history.push("/diares");
+
+    const Api = new API("http://127.0.0.1:5000");
+    Api.loginUser(email, password)
+      .then((data) => {
+        console.log(data);
+        history.push("/diaries");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  render() {
-    return (
-      <div className={styles.wrapper}>
-        <Grid container>
-          <Grid item xs={8} sm={9} md={10}></Grid>
-          <Grid item xs={4} sm={3} md={2}>
-            <Logo />
+  return (
+    <Container component="main" maxWidth="xs">
+      <div className={classes.wrapper}>
+        <Logo />
+        <Typography component="h1" variant="h5">
+          Zaloguj się{" "}
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Adres e-mail"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Hasło"
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <div className={styles.wrapperLogin}>
-              <p>Witaj w</p>
-              <p>
-                Lem<span className={styles.accentColor}>Med</span>
-              </p>
-              <br></br>
-              <p>Zaloguj się</p>
-              <form
-                onSubmit={this.handleSubmit}
-                className={styles.form}
-                noValidate
-                autoComplete="off"
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Zaloguj się
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link
+                href="#"
+                variant="body2"
+                onClick={() => history.push("/register")}
               >
-                <div>
-                  <TextField
-                    InputLabelProps={{ style: { fontSize: "1rem" } }}
-                    inputProps={{ style: { fontSize: "1.2rem" } }}
-                    id="user_login"
-                    label="Login "
-                    color="primary"
-                    name="user_login"
-                    type="text"
-                  />
-                </div>
-
-                <div>
-                  <TextField
-                    InputLabelProps={{ style: { fontSize: "1rem" } }}
-                    inputProps={{ style: { fontSize: "1.2rem" } }}
-                    id="user_password"
-                    label="Hasło"
-                    color="primary"
-                    type="password"
-                    name="user_password"
-                  />
-                </div>
-                <br></br>
-                <div>
-                  <Button type="submit" color="primary" variant="contained">
-                    Zaloguj się
-                  </Button>
-                </div>
-              </form>
-              <p className="smallCaption">
-                Nie masz konta?{" "}
-                <Link
-                  onClick={() => this.props.history.push("/register")}
-                  component="button"
-                  variant="body1"
-                >
-                  Zarejestruj się
-                </Link>
-              </p>
-            </div>
+                Nie masz konta? Zarejestruj się
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+        </form>
       </div>
-    );
-  }
-}
+    </Container>
+  );
+};
 
 export default LoginView;
