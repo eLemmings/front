@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Logo from "../components/Logo";
-import API from "../API";
+import { API } from "../API";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

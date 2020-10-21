@@ -3,43 +3,46 @@ import Button from "@material-ui/core/Button";
 import Menu from "./Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  arrow: {
+    fontSize: "1.5rem",
   },
 }));
 
-class TopBar extends React.Component {
-  render() {
-    return (
-      <Grid container alignItems="center" justify="center">
+const TopBar = (props) => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <Grid container xs={2}></Grid>
+      <Grid container alignItems="center" justify="space-around" xs={8}>
         <Grid item>
-          <Button color="secondary">&lt;</Button>
+          <Button
+            onClick={() => props.handleChangeFn(1)}
+            className={classes.arrow}
+          >
+            &lt;
+          </Button>
         </Grid>
         <Grid item m={6}>
-          <p>{this.props.title}</p>
+          <Typography variant="h5" component="h1">
+            {props.title}
+          </Typography>
         </Grid>
         <Grid item>
-          <Button color="secondary">&gt;</Button>
+          <Button
+            onClick={() => props.handleChangeFn(-1)}
+            className={classes.arrow}
+          >
+            &gt;
+          </Button>
         </Grid>
       </Grid>
-    );
-  }
-}
+      <Grid container xs={2}></Grid>
+    </div>
+  );
+};
 
 export default TopBar;
