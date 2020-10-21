@@ -12,6 +12,11 @@ import Divider from "@material-ui/core/Divider";
 import { API, getCookie, setCookie } from "../API";
 
 class DiaryView extends React.Component {
+  constructor(props){
+    super(props);
+    this.api = new API();
+    this.pullUserData();
+  }
   state = {
     diaries: retrievedDiaries,
     activeDiary: 0,
@@ -47,11 +52,18 @@ class DiaryView extends React.Component {
     return diary.colors[diary.entries[this.state.activeEntry].value - 1];
   };
 
+  pullUserData = () => {
+    this.api.getUserData()
+      .then((data) => {
+        this.setState({diaries: data.diaries});
+        // history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
-    const api = new API("http://127.0.0.1:5000");
-    api.getUserData((d) => {
-      console.log(d);
-    });
     return this.renderAccess();
   }
 
