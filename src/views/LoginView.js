@@ -3,17 +3,7 @@ import styles from "./scss/LoginView.module.scss";
 import Logo from "../components/Logo";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { TextField, Grid, Link, Button } from "@material-ui/core";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#2cc39d",
-    },
-    secondary: {
-      main: "#ffffff",
-    },
-  },
-});
+import "./scss/global.scss";
 
 class LoginView extends React.Component {
   state = {
@@ -35,46 +25,48 @@ class LoginView extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <div className={styles.wrapperLogin}>
-              <p className="textMedium letterSpacing1">Witaj w</p>
+              <p>Witaj w</p>
               <p>
                 Lem<span className={styles.accentColor}>Med</span>
               </p>
               <br></br>
-              <p className="textSmall">Zaloguj się</p>
-              <ThemeProvider theme={theme}>
-                <form
-                  onSubmit={this.handleSubmit}
-                  className={styles.form}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <div>
-                    <TextField
-                      id="user_login"
-                      label="login"
-                      color="secondary"
-                      name="user_login"
-                      type="text"
-                    />
-                  </div>
+              <p>Zaloguj się</p>
+              <form
+                onSubmit={this.handleSubmit}
+                className={styles.form}
+                noValidate
+                autoComplete="off"
+              >
+                <div>
+                  <TextField
+                    InputLabelProps={{ style: { fontSize: "1rem" } }}
+                    inputProps={{ style: { fontSize: "1.2rem" } }}
+                    id="user_login"
+                    label="Login "
+                    color="primary"
+                    name="user_login"
+                    type="text"
+                  />
+                </div>
 
-                  <div>
-                    <TextField
-                      id="user_password"
-                      label="register"
-                      color="secondary"
-                      type="password"
-                      name="user_password"
-                    />
-                  </div>
-                  <br></br>
-                  <div>
-                    <Button type="submit" color="primary" variant="contained">
-                      Zaloguj się
-                    </Button>
-                  </div>
-                </form>
-              </ThemeProvider>
+                <div>
+                  <TextField
+                    InputLabelProps={{ style: { fontSize: "1rem" } }}
+                    inputProps={{ style: { fontSize: "1.2rem" } }}
+                    id="user_password"
+                    label="Hasło"
+                    color="primary"
+                    type="password"
+                    name="user_password"
+                  />
+                </div>
+                <br></br>
+                <div>
+                  <Button type="submit" color="primary" variant="contained">
+                    Zaloguj się
+                  </Button>
+                </div>
+              </form>
               <p className="smallCaption">
                 Nie masz konta?{" "}
                 <Link
