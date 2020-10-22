@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import Logo from "../components/Logo";
 import { API } from "../API";
 import { useHistory } from "react-router-dom";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -53,67 +54,81 @@ const RegisterView = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <div className={classes.wrapper}>
-        <Logo />
-        <Typography component="h1" variant="h5">
-          Zarejestruj się{" "}
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                name="login"
-                variant="outlined"
-                required
-                fullWidth
-                id="login"
-                label="Login"
-                autoFocus
-                onChange={(e) => setLogin(e.target.value)}
-              />
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "80vh" }}
+      >
+        <div className={classes.wrapper}>
+          <Box mb={2}>
+            <Logo />
+          </Box>
+          <Typography component="h1" variant="h5">
+            Zarejestruj się{" "}
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="login"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="login"
+                  label="Login"
+                  autoFocus
+                  onChange={(e) => setLogin(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Adres e-mail"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Hasło"
+                  type="password"
+                  id="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Adres e-mail"
-                name="email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Zarejestruj się
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => history.push("/")}
+                >
+                  Masz już konto? Zaloguj się
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Hasło"
-                type="password"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Zarejestruj się
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2" onClick={() => history.push("/")}>
-                Masz już konto? Zaloguj się
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
+          </form>
+        </div>
+      </Grid>
     </Container>
   );
 };

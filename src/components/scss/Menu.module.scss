@@ -1,67 +1,3 @@
-.burgerWrapper {
-  padding: 10px;
-  cursor: pointer;
-  background-color: transparent;
-  border: 0;
-  position: relative;
-  z-index: 10;
-  outline: none;
-}
-
-.burgerBox {
-  width: 40px;
-  height: 24px;
-  display: inline-block;
-  position: relative;
-}
-
-.burgerInner {
-  width: 100%;
-  height: 3px;
-  left: 0;
-  position: absolute;
-  background-color: black;
-  top: 50%;
-
-  transition: 0.3s 0.1s ease-in-out;
-}
-
-.burgerInner::after,
-.burgerInner::before {
-  width: 100%;
-  height: 3px;
-  left: 0;
-  position: absolute;
-  background-color: black;
-  top: 50%;
-
-  content: "";
-  transition: 0.5s ease-in-out;
-}
-
-.burgerInner::after {
-  top: 10px;
-}
-
-.burgerInner::before {
-  top: -10px;
-}
-
-.burgerActive {
-  @extend .burgerWrapper;
-}
-
-.burgerActive .burgerInner {
-  background-color: transparent;
-}
-.burgerActive .burgerInner::before {
-  transform: translateY(10px) rotate(45deg);
-}
-
-.burgerActive .burgerInner::after {
-  transform: translateY(-10px) rotate(-45deg);
-}
-
 // Navigation
 
 .nav {
@@ -69,16 +5,21 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
-  z-index: 5;
+  width: 70%;
+  z-index: 15;
 
-  background-color: rgba(#fa7f7f, 0.8);
+  background-color: rgba(#fa7f7f, 0.9);
 
   transform: translateX(-100%);
   transition: 0.5s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.navActive {
+  @extend .nav;
+  transform: translateX(0);
 }
 
 .list {
@@ -104,21 +45,4 @@
   border: none;
   font-weight: 600;
   font-size: 2.4rem;
-}
-
-.burgerActive ~ .nav {
-  transform: translateX(0);
-}
-
-.burgerActive ~ .nav .list:nth-child(1) {
-  animation: toggleOpacity 0.7s 0.2s ease-in-out both;
-}
-
-@keyframes toggleOpacity {
-  from {
-    transform: translateX(-10%);
-  }
-  to {
-    transform: translateX(0);
-  }
 }

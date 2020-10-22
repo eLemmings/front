@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import Logo from "../components/Logo";
 import { useHistory } from "react-router-dom";
 import { API, getCookie, setCookie } from "../API";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  textField: {
+    fontSize: "3rem",
   },
 }));
 
@@ -48,59 +52,69 @@ const LoginView = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <div className={classes.wrapper}>
-        <Logo />
-        <Typography component="h1" variant="h5">
-          Zaloguj się{" "}
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Adres e-mail"
-                name="email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "80vh" }}
+      >
+        <div className={classes.wrapper}>
+          <Box mb={2}>
+            <Logo />
+          </Box>
+          <Typography component="h1" variant="h5">
+            Zaloguj się{" "}
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Adres e-mail"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Hasło"
+                  type="password"
+                  id="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Hasło"
-                type="password"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Zaloguj się
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => history.push("/register")}
+                >
+                  Nie masz konta? Zarejestruj się
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Zaloguj się
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link
-                href="#"
-                variant="body2"
-                onClick={() => history.push("/register")}
-              >
-                Nie masz konta? Zarejestruj się
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
+          </form>
+        </div>
+      </Grid>
     </Container>
   );
 };

@@ -4,7 +4,7 @@ import addIcon from "../assets/add.svg";
 
 class Pixel extends React.Component {
   calcFlexBasis = () => {
-    return `calc(${100 / this.props.pixelSize}% - 6px)`;
+    return `calc(${100 / (17 - this.props.pixelSize)}% - 6px)`;
   };
 
   renderPixel = () => {

@@ -10,6 +10,11 @@ import MenuItem from "../components/MenuItem";
 import Button from "../components/Button";
 import Divider from "@material-ui/core/Divider";
 import { API, getCookie, setCookie } from "../API";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import AppBar from "@material-ui/core/AppBar";
+import Menu from "../components/Menu";
 
 class DiaryView extends React.Component {
   state = {
@@ -19,6 +24,7 @@ class DiaryView extends React.Component {
     pixelEditOpened: false,
     pixelAddOpened: false,
     sliderValue: 4,
+    isMenuActive: false,
   };
 
   handleSliderChange = (e, value) => {
@@ -47,6 +53,10 @@ class DiaryView extends React.Component {
     return diary.colors[diary.entries[this.state.activeEntry].value - 1];
   };
 
+  toggleMenu = () => {
+    this.setState((prevstate) => ({ isMenuActive: !prevstate.isMenuActive }));
+  };
+
   render() {
     const api = new API("http://127.0.0.1:5000");
     api.getUserData((d) => {
@@ -63,17 +73,7 @@ class DiaryView extends React.Component {
     const diary = this.state.diaries[this.state.activeDiary];
     return (
       <div className={styles.wrapper}>
-        <TopBar
-          handleChangeFn={this.changeDiary}
-          title={diary.name}
-          menuItems={[
-            <MenuItem item={<Button>Wyloguj się</Button>} />,
-            <MenuItem item={<Button>Wyloguj się</Button>} />,
-            <MenuItem item={<Button>Wyloguj się</Button>} />,
-            <MenuItem item={<Button>Wyloguj się</Button>} />,
-            <MenuItem item={<Button>Wyloguj się</Button>} />,
-          ]}
-        />
+        <TopBar handleChangeFn={this.changeDiary} title={diary.name} />
         <Divider />
         <DiaryGrid
           diary={diary}
@@ -85,16 +85,37 @@ class DiaryView extends React.Component {
             this.setPixelEdit(e, true, index);
           }}
         />
-        <div className={styles.sliderWrapper}>
-          <Slider
-            defaultValue={this.state.sliderValue}
-            aria-labelledby="discrete-slider"
-            step={1}
-            min={2}
-            max={10}
-            onChange={this.handleSliderChange}
-          />
-        </div>
+        <AppBar
+          position="fixed"
+          color="primary"
+          style={{ bottom: "0", top: "auto" }}
+        >
+          <Toolbar>
+            <Slider
+              defaultValue={this.state.sliderValue}
+              aria-labelledby="discrete-slider"
+              step={1}
+              min={3}
+              max={14}
+              onChange={this.handleSliderChange}
+              color="secondary"
+            />
+
+            <IconButton edge="end" color="inherit" aria-label="open drawer">
+              <Menu
+                active={this.state.isMenuActive}
+                menuItems={[
+                  <MenuItem item={<Button>Wyloguj się</Button>} />,
+                  <MenuItem item={<Button>Wyloguj się</Button>} />,
+                  <MenuItem item={<Button>Wyloguj się</Button>} />,
+                  <MenuItem item={<Button>Wyloguj się</Button>} />,
+                  <MenuItem item={<Button>Wyloguj się</Button>} />,
+                ]}
+              />
+              <MenuIcon onClick={this.toggleMenu} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
         {this.state.pixelEditOpened && (
           <PixelEditMenu
             handleMenuClose={(e) => {
