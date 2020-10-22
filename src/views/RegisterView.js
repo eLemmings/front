@@ -41,7 +41,7 @@ const RegisterView = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const Api = new API("http://127.0.0.1:5000");
+    const Api = new API();
     Api.registerUser(login, email, password)
       .then((data) => {
         console.log(data);

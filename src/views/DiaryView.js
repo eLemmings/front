@@ -17,6 +17,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Menu from "../components/Menu";
 
 class DiaryView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.api = new API();
+    this.pullUserData();
+  }
   state = {
     diaries: retrievedDiaries,
     activeDiary: 0,
@@ -56,12 +61,19 @@ class DiaryView extends React.Component {
   toggleMenu = () => {
     this.setState((prevstate) => ({ isMenuActive: !prevstate.isMenuActive }));
   };
+  pullUserData = () => {
+    this.api
+      .getUserData()
+      .then((data) => {
+        this.setState({ diaries: data.diaries });
+        // history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   render() {
-    const api = new API("http://127.0.0.1:5000");
-    api.getUserData((d) => {
-      console.log(d);
-    });
     return this.renderAccess();
   }
 
