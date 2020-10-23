@@ -8,7 +8,7 @@ import PixelAddMenu from "../components/PixelAddMenu";
 import MenuItem from "../components/MenuItem";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import { API } from "../API";
+import { API, getCookie } from "../API";
 // import { getCookie, setCookie } from "../API";
 import Slider from "../components/Slider";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -79,6 +79,7 @@ class DiaryView extends React.Component {
 
   addEntry = (entry) => {
     this.state.diaries[this.state.activeDiary].entries.push(entry);
+    this.api.updateUserData({diaries: this.state.diaries});
   };
 
   addDiary = (e) => {
@@ -88,6 +89,7 @@ class DiaryView extends React.Component {
   updateEntry = (entry) => {
     let entries = this.state.diaries[this.state.activeDiary].entries;
     entries[this.state.activeEntry] = entry;
+    this.api.updateUserData({diaries: this.state.diaries});
     // this.setState((prevState) => ({
     //   diaries: {
     //     ...prevState.diaries,
