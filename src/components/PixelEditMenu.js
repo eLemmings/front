@@ -36,8 +36,8 @@ class PixelEditMenu extends React.Component {
             <Slider
               step={1}
               value={this.state.entry.value}
-              min={this.props.range.min - 2}
-              max={this.props.range.max - 1}
+              min={1}
+              max={this.props.range.max}
               marks
               onChange={(e, v) => {
                 this.setState((prevState) => ({
@@ -53,9 +53,7 @@ class PixelEditMenu extends React.Component {
               p={this.state.entry.value < 0 ? 2 : 3}
               justifyContent="center"
               alignItems="center"
-              style={{
-                backgroundColor: this.props.colors[this.state.entry.value],
-              }}
+              style={{ backgroundColor: this.props.color }}
             >
               <Box>{this.state.entry.value < 0 ? "BRAK" : ""}</Box>
             </Box>

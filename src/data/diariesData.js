@@ -1,7 +1,6 @@
 const diaries = [
   {
     name: "diary",
-    date: "1602962556462",
     max: 10,
     min: 1,
     color: "#FF0000",

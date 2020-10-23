@@ -22,7 +22,7 @@ class DiaryView extends React.Component {
   constructor(props) {
     super(props);
     this.api = new API();
-    // this.pullUserData();
+    this.pullUserData();
   }
 
   state = {
@@ -92,6 +92,7 @@ class DiaryView extends React.Component {
   updateEntry = (entry) => {
     let entries = this.state.diaries[this.state.activeDiary].entries;
     entries[this.state.activeEntry] = entry;
+    console.log(this.state.diaries);
     this.api.updateUserData({ diaries: this.state.diaries });
   };
 
