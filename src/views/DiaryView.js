@@ -22,7 +22,7 @@ class DiaryView extends React.Component {
   constructor(props) {
     super(props);
     this.api = new API();
-    this.pullUserData();
+    // this.pullUserData();
   }
 
   state = {
@@ -58,8 +58,8 @@ class DiaryView extends React.Component {
 
   activeEntryColorIndex = () => {
     const diary = this.state.diaries[this.state.activeDiary];
-    const color = diary.colors[diary.entries[this.state.activeEntry].value];
-    return diary.colors.indexOf(color);
+    const color = diary.color[diary.entries[this.state.activeEntry].value];
+    return diary.color.indexOf(color);
   };
 
   toggleMenu = () => {
@@ -86,21 +86,13 @@ class DiaryView extends React.Component {
 
   addDiary = (e, diary) => {
     e.preventDefault();
-    // console.log("siema eniu");
-    console.log(diary);
+    this.setState((prevState) => ({ diaries: [...prevState.diaries, diary] }));
   };
 
   updateEntry = (entry) => {
     let entries = this.state.diaries[this.state.activeDiary].entries;
     entries[this.state.activeEntry] = entry;
     this.api.updateUserData({ diaries: this.state.diaries });
-    // this.setState((prevState) => ({
-    //   diaries: {
-    //     ...prevState.diaries,
-    //     entries: entries,
-    //   },
-    // }));
-    // console.log(this.state.diaries);
   };
 
   toggleAddDiaryForm = () => {
@@ -109,9 +101,12 @@ class DiaryView extends React.Component {
     }));
   };
 
+  chooseDiary = (index) => {
+    this.setState({ activeDiary: index });
+  };
+
   render() {
-    if (getCookie("token") !== "")
-      return this.renderAccess();
+    if (getCookie("token") !== "") return this.renderAccess();
     return this.renderNoAccess();
   }
 
@@ -127,6 +122,7 @@ class DiaryView extends React.Component {
         <TopBar
           handleChangeFn={this.changeDiary}
           diaries={this.state.diaries}
+          chooseDiary={this.chooseDiary}
         />
         <Divider />
         <DiaryGrid

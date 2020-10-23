@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TopBar = (props) => {
   const classes = useStyles();
-
   return (
     <Container fixed>
       <Box position="fixed" zIndex="15" left="0" right="0">
@@ -49,7 +48,11 @@ const TopBar = (props) => {
                     input={<Input name="circle" id="circle" />}
                   >
                     {props.diaries.map((diary, index) => (
-                      <MenuItem key={index} value={index}>
+                      <MenuItem
+                        key={index}
+                        value={index}
+                        onClick={() => props.chooseDiary(index)}
+                      >
                         {diary.name}
                       </MenuItem>
                     ))}

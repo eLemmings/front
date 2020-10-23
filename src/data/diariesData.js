@@ -1,20 +1,11 @@
 const diaries = [
-<<<<<<< HEAD
   {
     name: "diary",
-    max: 2,
+    date: "1602962556462",
+    max: 10,
     min: 1,
-    colors: [],
-    entries: [],
-  },
-=======
-	{
-		name: "diary",
-		date: "1602962556462",
-		max: 10,
-		min: 1,
-		color: "#FF0000",
-		entries: [
+    color: "#FF0000",
+    entries: [
       { value: 0, description: "", date: 0 },
       { value: 1, description: "", date: 0 },
       { value: 2, description: "", date: 0 },
@@ -27,8 +18,7 @@ const diaries = [
       { value: 9, description: "", date: 0 },
       { value: 10, description: "", date: 0 },
     ],
-	},
->>>>>>> 30f1734d8008774eb5bc7459f74f54819cd5c703
+  },
 ];
 
 export default diaries;

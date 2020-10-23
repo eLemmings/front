@@ -12,6 +12,7 @@ class Form extends React.Component {
       name: "",
       range: 1,
       color: 50,
+      entries: [],
     },
   };
 
@@ -45,7 +46,9 @@ class Form extends React.Component {
           fullWidth
           onChange={(e) => {
             const { value } = e.target;
-            this.setState({ diary: { name: value } });
+            this.setState((prevState) => ({
+              diary: { ...prevState.diary, name: value },
+            }));
           }}
         />
         <Box mt={5} mb={3}>
@@ -65,9 +68,9 @@ class Form extends React.Component {
             max={100}
             valueLabelDisplay="auto"
             onChange={(e, v) => {
-              this.setState({
-                diary: { range: v },
-              });
+              this.setState((prevState) => ({
+                diary: { ...prevState.diary, range: v },
+              }));
             }}
           />
         </Box>
@@ -88,9 +91,9 @@ class Form extends React.Component {
             min={1}
             max={360}
             onChange={(e, v) => {
-              this.setState({
-                diary: { color: v },
-              });
+              this.setState((prevState) => ({
+                diary: { ...prevState.diary, color: v },
+              }));
             }}
           />
           <Box
