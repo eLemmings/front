@@ -25,7 +25,7 @@ export class API {
 
   registerUser(nick, email, password) {
     const userData = { nick, email, password };
-    return this.createRequest("register", "POST", userData); // Zwraca Promise
+    return this.createRequest("register", "POST", userData);
   }
 
   loginUser(email, password) {
@@ -38,6 +38,18 @@ export class API {
 
   getUserData() {
     return this.createRequest("user", "GET");
+  }
+
+  updateUserData(data) {
+    return this.createRequest("user/data", "PUT", data);
+  }
+
+  createShare(id) {
+    return this.createRequest("share", "PUT", id);
+  }
+
+  getUserShares() {
+    return this.createRequest("share", "GET");
   }
 }
 
@@ -61,4 +73,8 @@ export function getCookie(cname) {
     }
   }
   return "";
+}
+
+export function deleteCookie(cname) {
+  document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
