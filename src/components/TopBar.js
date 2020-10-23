@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TopBar = (props) => {
   const classes = useStyles();
+
   return (
     <Container fixed>
       <Box position="fixed" zIndex="15" left="0" right="0">
@@ -44,7 +45,7 @@ const TopBar = (props) => {
                 <FormControl className={classes.formControl}>
                   <Select
                     style={{ color: "#ffffff" }}
-                    defaultValue={0}
+                    value={props.activeDiary}
                     input={<Input name="circle" id="circle" />}
                   >
                     {props.diaries.map((diary, index) => (
