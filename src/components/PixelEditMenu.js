@@ -53,9 +53,11 @@ class PixelEditMenu extends React.Component {
               p={this.state.entry.value < 0 ? 2 : 3}
               justifyContent="center"
               alignItems="center"
-              style={{
-                backgroundColor: this.props.colors[this.state.entry.value],
-              }}
+              style={
+                {
+                  // backgroundColor: this.props.colors[this.state.entry.value],
+                }
+              }
             >
               <Box>{this.state.entry.value < 0 ? "BRAK" : ""}</Box>
             </Box>

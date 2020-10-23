@@ -52,9 +52,9 @@ class PixelAddMenu extends React.Component {
               boxShadow={2}
               style={{
                 padding: "20px",
-                backgroundColor: this.props.diary.colors[
-                  this.state.entry.value
-                ],
+                // backgroundColor: this.props.diary.colors[
+                //   this.state.entry.value
+                // ],
               }}
             />
           </DialogContent>

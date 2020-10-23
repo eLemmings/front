@@ -51,9 +51,8 @@ class Form extends React.Component {
             }));
           }}
         />
-        <Box mt={5} mb={3}>
+        <Box mt={5}>
           <Typography
-            id="discrete-slider-small-steps"
             color="primary"
             style={{
               color: "#ffffff",
@@ -62,7 +61,7 @@ class Form extends React.Component {
             zakres wartości
           </Typography>
           <Slider
-            aria-labelledby="discrete-slider-small-steps"
+            defaultValue={1}
             step={1}
             min={1}
             max={100}
@@ -75,9 +74,8 @@ class Form extends React.Component {
           />
         </Box>
 
-        <Box mt={5} mb={3}>
+        <Box mt={3} mb={3}>
           <Typography
-            id="discrete-slider-small-steps"
             color="primary"
             style={{
               color: "#ffffff",
@@ -86,7 +84,7 @@ class Form extends React.Component {
             kolor bazowy
           </Typography>
           <Slider
-            aria-labelledby="discrete-slider-small-steps"
+            defaultValue={1}
             step={1}
             min={1}
             max={360}

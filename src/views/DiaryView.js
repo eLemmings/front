@@ -85,8 +85,12 @@ class DiaryView extends React.Component {
   };
 
   addDiary = (e, diary) => {
+    const name =
+      diary.name === "" ? `dziennik${this.state.diaries.length}` : diary.name;
+    diary.name = name;
     e.preventDefault();
     this.setState((prevState) => ({ diaries: [...prevState.diaries, diary] }));
+    this.setState({ activeDiary: this.state.diaries.length });
   };
 
   updateEntry = (entry) => {
@@ -123,6 +127,7 @@ class DiaryView extends React.Component {
           handleChangeFn={this.changeDiary}
           diaries={this.state.diaries}
           chooseDiary={this.chooseDiary}
+          activeDiary={this.state.activeDiary}
         />
         <Divider />
         <DiaryGrid
