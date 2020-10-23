@@ -8,7 +8,11 @@ import PixelAddMenu from "../components/PixelAddMenu";
 import MenuItem from "../components/MenuItem";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+<<<<<<< HEAD
 import { API, getCookie } from "../API";
+=======
+import { API, getCookie, setCookie } from "../API";
+>>>>>>> 9dc4a9e1f304a11531368a0ee1a047ffe72935a0
 import Slider from "../components/Slider";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -21,6 +25,10 @@ class DiaryView extends React.Component {
   constructor(props) {
     super(props);
     this.api = new API();
+<<<<<<< HEAD
+=======
+    this.pullUserData();
+>>>>>>> 9dc4a9e1f304a11531368a0ee1a047ffe72935a0
   }
 
   state = {
@@ -95,6 +103,7 @@ class DiaryView extends React.Component {
   updateEntry = (entry) => {
     let entries = this.state.diaries[this.state.activeDiary].entries;
     entries[this.state.activeEntry] = entry;
+    console.log(this.state.diaries);
     this.api.updateUserData({ diaries: this.state.diaries });
   };
 
@@ -110,7 +119,7 @@ class DiaryView extends React.Component {
 
   render() {
     if (getCookie("token") !== "") return this.renderAccess();
-    return this.renderNoAccess();
+    window.location = window.location.origin;
   }
 
   renderNoAccess() {
@@ -202,6 +211,10 @@ class DiaryView extends React.Component {
                             fullWidth
                             variant="text"
                             color="primary"
+                            onClick={() => {
+                              setCookie("token", "");
+                              window.location = window.location.origin;
+                            }}
                             style={{
                               color: "#ffffff",
                             }}

@@ -36,8 +36,8 @@ class PixelAddMenu extends React.Component {
           <DialogContent>
             <Slider
               step={1}
-              min={this.props.diary.min - 1}
-              max={this.props.diary.max - 1}
+              min={1}
+              max={this.props.diary.max}
               value={this.state.entry.value}
               marks
               onChange={(e, v) => {
@@ -52,9 +52,13 @@ class PixelAddMenu extends React.Component {
               boxShadow={2}
               style={{
                 padding: "20px",
+<<<<<<< HEAD
                 // backgroundColor: this.props.diary.colors[
                 //   this.state.entry.value
                 // ],
+=======
+                backgroundColor: this.props.diary.color,
+>>>>>>> 9dc4a9e1f304a11531368a0ee1a047ffe72935a0
               }}
             />
           </DialogContent>
