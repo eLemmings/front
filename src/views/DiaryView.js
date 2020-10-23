@@ -8,8 +8,7 @@ import PixelAddMenu from "../components/PixelAddMenu";
 import MenuItem from "../components/MenuItem";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import { API, getCookie } from "../API";
-// import { getCookie, setCookie } from "../API";
+import { API, getCookie, setCookie } from "../API";
 import Slider from "../components/Slider";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -108,7 +107,7 @@ class DiaryView extends React.Component {
 
   render() {
     if (getCookie("token") !== "") return this.renderAccess();
-    return this.renderNoAccess();
+    window.location = window.location.origin;
   }
 
   renderNoAccess() {
@@ -199,6 +198,10 @@ class DiaryView extends React.Component {
                             fullWidth
                             variant="text"
                             color="primary"
+                            onClick={() => {
+                              setCookie("token", "");
+                              window.location = window.location.origin;
+                            }}
                             style={{
                               color: "#ffffff",
                             }}
