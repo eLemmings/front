@@ -51,6 +51,10 @@ export class API {
   getUserShares() {
     return this.createRequest("share", "GET");
   }
+
+  getShare(code) {
+    return this.createRequest("share/"+code, "GET");
+  }
 }
 
 export function setCookie(cname, cvalue, exdays = 1) {
