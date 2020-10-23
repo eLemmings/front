@@ -6,9 +6,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-import Slider from "../components/Slider";
 import TextField from "@material-ui/core/TextField";
 import { Box } from "@material-ui/core";
+import Slider from "../components/Slider";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -18,7 +18,7 @@ class PixelAddMenu extends React.Component {
   state = {
     entry: {
       value: 0,
-      description: 0,
+      description: "",
     },
   };
 
@@ -38,8 +38,8 @@ class PixelAddMenu extends React.Component {
               step={1}
               min={this.props.diary.min - 1}
               max={this.props.diary.max - 1}
+              value={this.state.entry.value}
               marks
-              // TODO: Repair handling values
               onChange={(e, v) => {
                 this.setState((prevState) => ({
                   entry: { ...prevState.entry, value: v },
@@ -49,6 +49,7 @@ class PixelAddMenu extends React.Component {
           </DialogContent>
           <DialogContent>
             <Box
+              boxShadow={2}
               style={{
                 padding: "20px",
                 backgroundColor: this.props.diary.colors[
@@ -76,6 +77,7 @@ class PixelAddMenu extends React.Component {
           <Button
             color="primary"
             onClick={() => {
+              console.log(this.state.entry);
               this.props.addEntry(this.state.entry);
               this.props.handleClose();
             }}

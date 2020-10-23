@@ -11,7 +11,7 @@ class DiaryGrid extends React.Component {
             <Pixel
               key={index}
               index={index}
-              color={this.props.diary.colors[entry.value - 1]}
+              color={this.props.diary.colors[entry.value]}
               pixelSize={this.props.pixelSize}
               handleOpenPixelEdit={this.props.handleOpenPixelEdit}
             />

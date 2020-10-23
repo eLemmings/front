@@ -56,9 +56,10 @@ class DiaryView extends React.Component {
       this.setState({ activeDiary: this.state.activeDiary + v });
   };
 
-  activeEntryColor = () => {
-    let diary = this.state.diaries[this.state.activeDiary];
-    return diary.colors[diary.entries[this.state.activeEntry].value - 1];
+  activeEntryColorIndex = () => {
+    const diary = this.state.diaries[this.state.activeDiary];
+    const color = diary.colors[diary.entries[this.state.activeEntry].value];
+    return diary.colors.indexOf(color);
   };
 
   toggleMenu = () => {
@@ -77,12 +78,23 @@ class DiaryView extends React.Component {
   };
 
   addEntry = (entry) => {
-    this.state.diaries[this.state.activeDiary].entries.push([entry]);
+    this.state.diaries[this.state.activeDiary].entries.push(entry);
   };
 
   addDiary = (e) => {
     e.preventDefault();
-    // e.target[0].value;
+  };
+
+  updateEntry = (entry) => {
+    let entries = this.state.diaries[this.state.activeDiary].entries;
+    entries[this.state.activeEntry] = entry;
+    // this.setState((prevState) => ({
+    //   diaries: {
+    //     ...prevState.diaries,
+    //     entries: entries,
+    //   },
+    // }));
+    // console.log(this.state.diaries);
   };
 
   render() {
@@ -191,12 +203,15 @@ class DiaryView extends React.Component {
         </AppBar>
         {this.state.pixelEditOpened && (
           <PixelEditMenu
-            color={this.activeEntryColor()}
+            updateEntry={this.updateEntry}
+            colorIndex={this.activeEntryColorIndex()}
             entry={diary.entries[this.state.activeEntry]}
             active={this.state.pixelEditOpened === "undefined" ? false : true}
             handleClose={(e) => {
               this.setPixelEdit(e, false, this.state.activeEntry);
             }}
+            range={{ max: diary.max, min: diary.min }}
+            colors={diary.colors}
           ></PixelEditMenu>
         )}
         {this.state.pixelAddOpened && (

@@ -6,13 +6,23 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import TextField from "@material-ui/core/TextField";
+import { Box } from "@material-ui/core";
+import Slider from "../components/Slider";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
 class PixelEditMenu extends React.Component {
+  state = {
+    entry: {
+      value: this.props.colorIndex,
+      description: this.props.entry.description,
+    },
+  };
   render() {
+    console.log(this.state.entry.value);
     return (
       <Dialog
         open={this.props.active}
@@ -20,18 +30,70 @@ class PixelEditMenu extends React.Component {
         onClose={this.props.handleClose}
         keepMounted
       >
-        <DialogTitle>Dodaj wpis do dziennika</DialogTitle>
+        <DialogTitle>Edytuj wpis</DialogTitle>
         <DialogContent>
           <DialogContentText>Wartość: </DialogContentText>
-          <DialogContent></DialogContent>
-          <DialogContent></DialogContent>
+          <DialogContent>
+            <Slider
+              step={1}
+              value={this.state.entry.value}
+              min={this.props.range.min - 2}
+              max={this.props.range.max - 1}
+              marks
+              onChange={(e, v) => {
+                this.setState((prevState) => ({
+                  entry: { ...prevState.entry, value: v },
+                }));
+              }}
+            />
+          </DialogContent>
+          <DialogContent>
+            <Box
+              boxShadow={2}
+              style={{
+                padding: "20px",
+                backgroundColor: this.props.colors[this.state.entry.value],
+              }}
+              position="relateve"
+            >
+              <Box
+                position="fixed"
+                top="50%"
+                left="50%"
+                style={{ transform: "translate(-50%, -25%)" }}
+              >
+                {this.state.entry.value < 0 ? "BRAK" : ""}
+              </Box>
+            </Box>
+          </DialogContent>
+          <TextField
+            label={this.state.entry.value < 0 ? "Pusto tutaj :(" : "Opis"}
+            multiline
+            rows={4}
+            value={this.state.entry.description}
+            InputProps={{
+              disabled: this.state.entry.value < 0 ? true : undefined,
+            }}
+            onChange={(event) => {
+              const { value } = event.target;
+              this.setState((prevState) => ({
+                entry: { ...prevState.entry, description: value },
+              }));
+            }}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={this.props.handleClose} color="primary">
             Wyjdź
           </Button>
-          <Button color="primary" onClick={this.props.handleClose}>
-            Dodaj
+          <Button
+            color="primary"
+            onClick={() => {
+              this.props.updateEntry(this.state.entry);
+              this.props.handleClose();
+            }}
+          >
+            Edytuj
           </Button>
         </DialogActions>
       </Dialog>
