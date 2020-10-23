@@ -2,19 +2,21 @@ import React from "react";
 import styles from "./scss/DiaryView.module.scss";
 import DiaryGrid from "../components/DiaryGrid";
 import retrievedDiaries from "../data/diariesData";
-import { Slider } from "@material-ui/core";
 import TopBar from "../components/TopBar";
 import PixelEditMenu from "../components/PixelEditMenu";
 import PixelAddMenu from "../components/PixelAddMenu";
 import MenuItem from "../components/MenuItem";
-import Button from "../components/Button";
+import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import { API, getCookie, setCookie } from "../API";
+import { API } from "../API";
+// import { getCookie, setCookie } from "../API";
+import Slider from "../components/Slider";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import Menu from "../components/Menu";
+import Form from "../components/Form";
 
 class DiaryView extends React.Component {
   constructor(props) {
@@ -22,14 +24,15 @@ class DiaryView extends React.Component {
     this.api = new API();
     this.pullUserData();
   }
+
   state = {
     diaries: retrievedDiaries,
     activeDiary: 0,
     activeEntry: 0,
     pixelEditOpened: false,
     pixelAddOpened: false,
-    sliderValue: 4,
-    isMenuActive: false,
+    sliderValue: 12,
+    isAddDiaryFormActive: true,
   };
 
   handleSliderChange = (e, value) => {
@@ -61,16 +64,25 @@ class DiaryView extends React.Component {
   toggleMenu = () => {
     this.setState((prevstate) => ({ isMenuActive: !prevstate.isMenuActive }));
   };
+
   pullUserData = () => {
     this.api
       .getUserData()
       .then((data) => {
         this.setState({ diaries: data.diaries });
-        // history.push("/");
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  addEntry = (entry) => {
+    this.state.diaries[this.state.activeDiary].entries.push([entry]);
+  };
+
+  addDiary = (e) => {
+    e.preventDefault();
+    // e.target[0].value;
   };
 
   render() {
@@ -83,9 +95,13 @@ class DiaryView extends React.Component {
 
   renderAccess() {
     const diary = this.state.diaries[this.state.activeDiary];
+
     return (
       <div className={styles.wrapper}>
-        <TopBar handleChangeFn={this.changeDiary} title={diary.name} />
+        <TopBar
+          handleChangeFn={this.changeDiary}
+          diaries={this.state.diaries}
+        />
         <Divider />
         <DiaryGrid
           diary={diary}
@@ -104,8 +120,7 @@ class DiaryView extends React.Component {
         >
           <Toolbar>
             <Slider
-              defaultValue={this.state.sliderValue}
-              aria-labelledby="discrete-slider"
+              value={this.state.sliderValue}
               step={1}
               min={3}
               max={14}
@@ -113,35 +128,85 @@ class DiaryView extends React.Component {
               color="secondary"
             />
 
-            <IconButton edge="end" color="inherit" aria-label="open drawer">
-              <Menu
-                active={this.state.isMenuActive}
-                menuItems={[
-                  <MenuItem item={<Button>Wyloguj się</Button>} />,
-                  <MenuItem item={<Button>Wyloguj się</Button>} />,
-                  <MenuItem item={<Button>Wyloguj się</Button>} />,
-                  <MenuItem item={<Button>Wyloguj się</Button>} />,
-                  <MenuItem item={<Button>Wyloguj się</Button>} />,
-                ]}
-              />
-              <MenuIcon onClick={this.toggleMenu} />
+            <IconButton
+              edge="end"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => {
+                this.toggleMenu();
+                this.setState((prevState) => ({
+                  isAddDiaryFormActive: !prevState.isAddDiaryFormActive,
+                }));
+              }}
+            >
+              <MenuIcon />
             </IconButton>
+            <Menu
+              active={this.state.isMenuActive}
+              menuItems={
+                this.state.isAddDiaryFormActive
+                  ? [
+                      <MenuItem
+                        key={0}
+                        item={
+                          <Form
+                            submitFn={(e) => {
+                              this.addDiary(e);
+                              this.toggleMenu();
+                            }}
+                          />
+                        }
+                      />,
+                    ]
+                  : [
+                      <MenuItem
+                        key={0}
+                        item={
+                          <Button
+                            variant="text"
+                            fullWidth
+                            color="primary"
+                            onClick={() => {
+                              this.setState((prevState) => ({
+                                isAddDiaryFormActive: !prevState.isAddDiaryFormActive,
+                              }));
+                            }}
+                          >
+                            Dodaj dziennik
+                          </Button>
+                        }
+                      />,
+                      <MenuItem
+                        key={1}
+                        item={
+                          <Button fullWidth variant="text" color="primary">
+                            Wyloguj się
+                          </Button>
+                        }
+                      />,
+                    ]
+              }
+            />
           </Toolbar>
         </AppBar>
         {this.state.pixelEditOpened && (
           <PixelEditMenu
-            handleMenuClose={(e) => {
-              this.setPixelEdit(e, false, this.state.activeEntry);
-            }}
             color={this.activeEntryColor()}
             entry={diary.entries[this.state.activeEntry]}
+            active={this.state.pixelEditOpened === "undefined" ? false : true}
+            handleClose={(e) => {
+              this.setPixelEdit(e, false, this.state.activeEntry);
+            }}
           ></PixelEditMenu>
         )}
         {this.state.pixelAddOpened && (
           <PixelAddMenu
-            handleMenuClose={(e) => {
+            handleClose={(e) => {
               this.setPixelAdd(e, false);
             }}
+            active={this.state.pixelAddOpened === "undefined" ? false : true}
+            addEntry={this.addEntry}
+            diary={diary}
           ></PixelAddMenu>
         )}
       </div>

@@ -8,7 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Logo from "../components/Logo";
 import { useHistory } from "react-router-dom";
-import { API, getCookie, setCookie } from "../API";
+import { API } from "../API";
+// import { getCookie, setCookie } from "../API";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,7 @@ const LoginView = () => {
 
     const Api = new API();
     Api.loginUser(email, password).then((data) => {
-      setCookie("token", data.token, 3);
+      // setCookie("token", data.token, 3);
       history.push("/diaries");
     });
   };

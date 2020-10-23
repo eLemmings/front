@@ -1,50 +1,42 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Fade from "@material-ui/core/Fade";
-import Backdrop from "@material-ui/core/Backdrop";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 
-// this.props.color this.props.entry.description
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+class PixelEditMenu extends React.Component {
+  render() {
+    return (
+      <Dialog
+        open={this.props.active}
+        TransitionComponent={Transition}
+        onClose={this.props.handleClose}
+        keepMounted
+      >
+        <DialogTitle>Dodaj wpis do dziennika</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Wartość: </DialogContentText>
+          <DialogContent></DialogContent>
+          <DialogContent></DialogContent>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.props.handleClose} color="primary">
+            Wyjdź
+          </Button>
+          <Button color="primary" onClick={this.props.handleClose}>
+            Dodaj
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+}
 
-const PixelAddMenu = (props) => {
-  const classes = useStyles();
-  return (
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      className={classes.modal}
-      open={props.handleMenuClose}
-      onClose={props.handleMenuClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
-    >
-      <Fade in={props.handleMenuClose}>
-        <div className={classes.paper}>
-          <h2 id="transition-modal-title">Transition modal</h2>
-          <p id="transition-modal-description">
-            react-transition-group animates me.
-          </p>
-        </div>
-      </Fade>
-    </Modal>
-  );
-};
-
-export default PixelAddMenu;
+export default PixelEditMenu;

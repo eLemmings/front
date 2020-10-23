@@ -3,6 +3,10 @@ import styles from "./scss/Pixel.module.scss";
 import addIcon from "../assets/add.svg";
 
 class Pixel extends React.Component {
+  state = {
+    open: false,
+  };
+
   calcFlexBasis = () => {
     return `calc(${100 / (17 - this.props.pixelSize)}% - 6px)`;
   };
@@ -31,7 +35,7 @@ class Pixel extends React.Component {
           this.props.handleOpenPixelAdd(e, true);
         }}
       >
-        <img src={addIcon} className={styles.addIcon} alt="add" />
+        <img src={addIcon} className={styles.addIcon} alt="" />
       </div>
     );
   };

@@ -1,50 +1,91 @@
 import React from "react";
-import styles from "./scss/Pixel.module.scss";
-import Button from "./Button";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Fade from "@material-ui/core/Fade";
-import Backdrop from "@material-ui/core/Backdrop";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import Slider from "../components/Slider";
+import TextField from "@material-ui/core/TextField";
+import { Box } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
-const PixelAddMenu = (props) => {
-  const classes = useStyles();
-  return (
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      className={classes.modal}
-      open={props.handleMenuClose}
-      onClose={props.handleMenuClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
-    >
-      <Fade in={props.handleMenuClose}>
-        <div className={classes.paper}>
-          <h2 id="transition-modal-title">Transition modal</h2>
-          <p id="transition-modal-description">
-            react-transition-group animates me.
-          </p>
-        </div>
-      </Fade>
-    </Modal>
-  );
-};
+class PixelAddMenu extends React.Component {
+  state = {
+    entry: {
+      value: 0,
+      description: 0,
+    },
+  };
+
+  render() {
+    return (
+      <Dialog
+        open={this.props.active}
+        TransitionComponent={Transition}
+        onClose={this.props.handleClose}
+        keepMounted
+      >
+        <DialogTitle>Dodaj wpis do dziennika</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Wartość: </DialogContentText>
+          <DialogContent>
+            <Slider
+              step={1}
+              min={this.props.diary.min - 1}
+              max={this.props.diary.max - 1}
+              marks
+              // TODO: Repair handling values
+              onChange={(e, v) => {
+                this.setState((prevState) => ({
+                  entry: { ...prevState.entry, value: v },
+                }));
+              }}
+            />
+          </DialogContent>
+          <DialogContent>
+            <Box
+              style={{
+                padding: "20px",
+                backgroundColor: this.props.diary.colors[
+                  this.state.entry.value
+                ],
+              }}
+            />
+          </DialogContent>
+          <TextField
+            label="Opis"
+            multiline
+            rows={4}
+            onChange={(event) => {
+              const { value } = event.target;
+              this.setState((prevState) => ({
+                entry: { ...prevState.entry, description: value },
+              }));
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.props.handleClose} color="primary">
+            Wyjdź
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => {
+              this.props.addEntry(this.state.entry);
+              this.props.handleClose();
+            }}
+          >
+            Dodaj
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+}
 
 export default PixelAddMenu;

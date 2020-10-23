@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Container, Box, Input } from "@material-ui/core";
@@ -47,11 +46,15 @@ const TopBar = (props) => {
                 <FormControl className={classes.formControl}>
                   <Select
                     style={{ color: "#ffffff" }}
-                    defaultValue={10}
+                    defaultValue={0}
                     // onChange={(event) => handleInput(event, "circle")}
                     input={<Input name="circle" id="circle" />}
                   >
-                    <MenuItem value={10}>Dziennik</MenuItem>
+                    {props.diaries.map((diary, index) => (
+                      <MenuItem key={index} value={index}>
+                        {diary.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
