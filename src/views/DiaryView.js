@@ -100,7 +100,9 @@ class DiaryView extends React.Component {
   };
 
   render() {
-    return this.renderAccess();
+    if (getCookie("token") !== "")
+      return this.renderAccess();
+    return this.renderNoAccess();
   }
 
   renderNoAccess() {

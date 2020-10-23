@@ -4,6 +4,7 @@ import LoginView from "./LoginView";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DiaryView from "./DiaryView";
 import RegisterView from "./RegisterView";
+import ShareView from "./ShareView";
 
 const Root = () => (
   <BrowserRouter>
@@ -12,6 +13,7 @@ const Root = () => (
         <Route exact path="/" component={LoginView} />
         <Route path="/diaries" component={DiaryView} />
         <Route path="/register" component={RegisterView} />
+        <Route path="/share/:code" component={ShareView} />
       </Switch>
     </>
   </BrowserRouter>
