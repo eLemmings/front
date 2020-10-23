@@ -25,7 +25,7 @@ class PixelEditMenu extends React.Component {
     console.log(this.state.entry.value);
     return (
       <Dialog
-        open={this.props.active}
+        open={true}
         TransitionComponent={Transition}
         onClose={this.props.handleClose}
         keepMounted
