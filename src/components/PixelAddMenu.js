@@ -62,8 +62,8 @@ class PixelAddMenu extends React.Component {
             label="Opis"
             multiline
             rows={4}
-            onChange={(event) => {
-              const { value } = event.target;
+            onChange={(e) => {
+              const { value } = e.target;
               this.setState((prevState) => ({
                 entry: { ...prevState.entry, description: value },
               }));

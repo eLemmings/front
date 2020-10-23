@@ -22,10 +22,9 @@ class PixelEditMenu extends React.Component {
     },
   };
   render() {
-    console.log(this.state.entry.value);
     return (
       <Dialog
-        open={this.props.active}
+        open={true}
         TransitionComponent={Transition}
         onClose={this.props.handleClose}
         keepMounted
@@ -50,20 +49,15 @@ class PixelEditMenu extends React.Component {
           <DialogContent>
             <Box
               boxShadow={2}
+              display="flex"
+              p={this.state.entry.value < 0 ? 2 : 3}
+              justifyContent="center"
+              alignItems="center"
               style={{
-                padding: "20px",
                 backgroundColor: this.props.colors[this.state.entry.value],
               }}
-              position="relateve"
             >
-              <Box
-                position="fixed"
-                top="50%"
-                left="50%"
-                style={{ transform: "translate(-50%, -25%)" }}
-              >
-                {this.state.entry.value < 0 ? "BRAK" : ""}
-              </Box>
+              <Box>{this.state.entry.value < 0 ? "BRAK" : ""}</Box>
             </Box>
           </DialogContent>
           <TextField

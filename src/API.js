@@ -53,7 +53,7 @@ export class API {
   }
 
   getShare(code) {
-    return this.createRequest("share/"+code, "GET");
+    return this.createRequest("share/" + code, "GET");
   }
 }
 

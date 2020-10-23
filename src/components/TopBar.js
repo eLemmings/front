@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   arrow: {
     fontSize: "1rem",
   },
-
   white: {
     padding: "10px",
     backgroundColor: "#3F51B5",
@@ -47,7 +46,6 @@ const TopBar = (props) => {
                   <Select
                     style={{ color: "#ffffff" }}
                     defaultValue={0}
-                    // onChange={(event) => handleInput(event, "circle")}
                     input={<Input name="circle" id="circle" />}
                   >
                     {props.diaries.map((diary, index) => (

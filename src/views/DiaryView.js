@@ -32,7 +32,7 @@ class DiaryView extends React.Component {
     pixelEditOpened: false,
     pixelAddOpened: false,
     sliderValue: 12,
-    isAddDiaryFormActive: true,
+    isAddDiaryFormActive: false,
   };
 
   handleSliderChange = (e, value) => {
@@ -63,7 +63,9 @@ class DiaryView extends React.Component {
   };
 
   toggleMenu = () => {
-    this.setState((prevstate) => ({ isMenuActive: !prevstate.isMenuActive }));
+    this.setState((prevstate) => ({
+      isMenuActive: !prevstate.isMenuActive,
+    }));
   };
 
   pullUserData = () => {
@@ -79,17 +81,19 @@ class DiaryView extends React.Component {
 
   addEntry = (entry) => {
     this.state.diaries[this.state.activeDiary].entries.push(entry);
-    this.api.updateUserData({diaries: this.state.diaries});
+    this.api.updateUserData({ diaries: this.state.diaries });
   };
 
-  addDiary = (e) => {
+  addDiary = (e, diary) => {
     e.preventDefault();
+    // console.log("siema eniu");
+    console.log(diary);
   };
 
   updateEntry = (entry) => {
     let entries = this.state.diaries[this.state.activeDiary].entries;
     entries[this.state.activeEntry] = entry;
-    this.api.updateUserData({diaries: this.state.diaries});
+    this.api.updateUserData({ diaries: this.state.diaries });
     // this.setState((prevState) => ({
     //   diaries: {
     //     ...prevState.diaries,
@@ -97,6 +101,12 @@ class DiaryView extends React.Component {
     //   },
     // }));
     // console.log(this.state.diaries);
+  };
+
+  toggleAddDiaryForm = () => {
+    this.setState((prevState) => ({
+      isAddDiaryFormActive: !prevState.isAddDiaryFormActive,
+    }));
   };
 
   render() {
@@ -146,12 +156,7 @@ class DiaryView extends React.Component {
               edge="end"
               color="inherit"
               aria-label="open drawer"
-              onClick={() => {
-                this.toggleMenu();
-                this.setState((prevState) => ({
-                  isAddDiaryFormActive: !prevState.isAddDiaryFormActive,
-                }));
-              }}
+              onClick={this.toggleMenu}
             >
               <MenuIcon />
             </IconButton>
@@ -164,10 +169,9 @@ class DiaryView extends React.Component {
                         key={0}
                         item={
                           <Form
-                            submitFn={(e) => {
-                              this.addDiary(e);
-                              this.toggleMenu();
-                            }}
+                            submitFn={this.addDiary}
+                            toggleMenuFn={this.toggleMenu}
+                            toggleAddDiaryFormFn={this.toggleAddDiaryForm}
                           />
                         }
                       />,
@@ -180,10 +184,9 @@ class DiaryView extends React.Component {
                             variant="text"
                             fullWidth
                             color="primary"
-                            onClick={() => {
-                              this.setState((prevState) => ({
-                                isAddDiaryFormActive: !prevState.isAddDiaryFormActive,
-                              }));
+                            onClick={this.toggleAddDiaryForm}
+                            style={{
+                              color: "#ffffff",
                             }}
                           >
                             Dodaj dziennik
@@ -193,7 +196,14 @@ class DiaryView extends React.Component {
                       <MenuItem
                         key={1}
                         item={
-                          <Button fullWidth variant="text" color="primary">
+                          <Button
+                            fullWidth
+                            variant="text"
+                            color="primary"
+                            style={{
+                              color: "#ffffff",
+                            }}
+                          >
                             Wyloguj się
                           </Button>
                         }
