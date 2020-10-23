@@ -9,7 +9,6 @@ import MenuItem from "../components/MenuItem";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { API, getCookie } from "../API";
-// import { getCookie, setCookie } from "../API";
 import Slider from "../components/Slider";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -22,7 +21,6 @@ class DiaryView extends React.Component {
   constructor(props) {
     super(props);
     this.api = new API();
-    // this.pullUserData();
   }
 
   state = {
@@ -85,10 +83,11 @@ class DiaryView extends React.Component {
   };
 
   addDiary = (e, diary) => {
+    e.preventDefault();
     const name =
       diary.name === "" ? `dziennik${this.state.diaries.length}` : diary.name;
     diary.name = name;
-    e.preventDefault();
+    console.log(diary.color);
     this.setState((prevState) => ({ diaries: [...prevState.diaries, diary] }));
     this.setState({ activeDiary: this.state.diaries.length });
   };
