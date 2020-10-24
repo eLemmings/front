@@ -1,5 +1,9 @@
 .item {
   text-align: center;
   padding: 15px 0;
-  border-bottom: transparent 1px solid;
+  border-bottom: white 1px solid;
+}
+
+.item:last-child {
+  border-bottom: none;
 }

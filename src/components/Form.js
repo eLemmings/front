@@ -4,9 +4,9 @@ import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
+import CancelTwoToneIcon from "@material-ui/icons/HighlightOffRounded";
 
-function hslToHex(h, s, l) {
+function HSLToHex(h, s, l) {
   s /= 100;
   l /= 100;
 
@@ -42,11 +42,12 @@ function hslToHex(h, s, l) {
     g = 0;
     b = x;
   }
-
+  // Having obtained RGB, convert channels to hex
   r = Math.round((r + m) * 255).toString(16);
   g = Math.round((g + m) * 255).toString(16);
   b = Math.round((b + m) * 255).toString(16);
 
+  // Prepend 0s, if necessary
   if (r.length === 1) r = "0" + r;
   if (g.length === 1) g = "0" + g;
   if (b.length === 1) b = "0" + b;
@@ -58,8 +59,8 @@ class Form extends React.Component {
   state = {
     diary: {
       name: "",
-      max: 1,
-      color: hslToHex(1, 100, 50),
+      max: 2,
+      color: HSLToHex(1, 100, 50),
       entries: [],
     },
   };
@@ -84,13 +85,14 @@ class Form extends React.Component {
               this.props.toggleAddDiaryFormFn();
             }}
           >
-            <CancelRoundedIcon fontSize="large" />
+            <CancelTwoToneIcon fontSize="large" />
           </Button>
         </Box>
 
         <Input
           placeholder="Nazwa dziennika"
           inputProps={{ "aria-label": "description" }}
+          defaultValue={this.props.edit ? this.props.diary.name : ""}
           fullWidth
           onChange={(e) => {
             const { value } = e.target;
@@ -109,9 +111,9 @@ class Form extends React.Component {
             zakres wartości
           </Typography>
           <Slider
-            defaultValue={1}
+            defaultValue={this.props.edit ? this.props.diary.max : 1}
             step={1}
-            min={1}
+            min={2}
             max={100}
             valueLabelDisplay="auto"
             onChange={(e, v) => {
@@ -140,7 +142,7 @@ class Form extends React.Component {
               this.setState((prevState) => ({
                 diary: {
                   ...prevState.diary,
-                  color: hslToHex(v, 100, 50),
+                  color: HSLToHex(v, 100, 50),
                 },
               }));
             }}
@@ -167,7 +169,7 @@ class Form extends React.Component {
             color: "#ffffff",
           }}
         >
-          Dodaj dziennik
+          {this.props.edit ? "Edytuj dziennik" : "Dodaj dziennik"}
         </Button>
       </form>
     );

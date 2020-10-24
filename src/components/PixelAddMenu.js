@@ -14,15 +14,34 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
+function hexToRgba(hex, opacity) {
+  var c;
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split("");
+    if (c.length === 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = "0x" + c.join("");
+    return (
+      "rgba(" +
+      [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
+      "," +
+      opacity +
+      ")"
+    );
+  }
+}
+
 class PixelAddMenu extends React.Component {
   state = {
     entry: {
-      value: 0,
+      value: 1,
       description: "",
     },
   };
 
   render() {
+    console.log(this.props);
     return (
       <Dialog
         open={this.props.active}
@@ -32,14 +51,13 @@ class PixelAddMenu extends React.Component {
       >
         <DialogTitle>Dodaj wpis do dziennika</DialogTitle>
         <DialogContent>
-          <DialogContentText>Wartość: </DialogContentText>
+          <DialogContentText>Wartość:</DialogContentText>
           <DialogContent>
             <Slider
               step={1}
               min={1}
               max={this.props.diary.max}
-              value={this.state.entry.value}
-              marks
+              defaultValue={1}
               onChange={(e, v) => {
                 this.setState((prevState) => ({
                   entry: { ...prevState.entry, value: v },
@@ -49,12 +67,15 @@ class PixelAddMenu extends React.Component {
           </DialogContent>
           <DialogContent>
             <Box
-              boxShadow={2}
+              boxShadow={3}
               style={{
                 padding: "20px",
-                backgroundColor: this.props.diary.color,
+                backgroundColor: hexToRgba(
+                  this.props.diary.color,
+                  this.state.entry.value / this.props.diary.max
+                ),
               }}
-            />
+            ></Box>
           </DialogContent>
           <TextField
             label="Opis"

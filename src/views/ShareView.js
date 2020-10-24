@@ -7,6 +7,8 @@ import Slider from "../components/Slider";
 import PixelLookupMenu from "../components/PixelLookupMenu";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
+import Grid from "@material-ui/core/Grid";
+import { Container, Box } from "@material-ui/core";
 
 class ShareView extends React.Component {
   constructor(props) {
@@ -32,7 +34,11 @@ class ShareView extends React.Component {
       .getShare(this.props.match.params.code)
       .then((data) => {
         console.log(data);
-        this.setState({ diary: data.diaries, name: data.name, id: data.pretty_id});
+        this.setState({
+          diary: data.diaries,
+          name: data.name,
+          id: data.pretty_id,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -47,6 +53,32 @@ class ShareView extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
+        <Container fixed>
+          <Box
+            position="fixed"
+            zIndex="15"
+            left="0"
+            top="0"
+            right="0"
+            width="100%"
+          >
+            <div
+              style={{
+                padding: "14px",
+                backgroundColor: "#3F51B5",
+                position: "relative",
+                zIndex: 15,
+                color: "#ffffff",
+              }}
+            >
+              <div>
+                <Grid container alignItems="center" justify="center">
+                  <Grid item>asdf</Grid>
+                </Grid>
+              </div>
+            </div>
+          </Box>
+        </Container>
         <DiaryGrid
           shared={true}
           diary={this.state.diary}

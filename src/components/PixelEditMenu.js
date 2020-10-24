@@ -14,6 +14,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
+function hexToRgba(hex, opacity) {
+  var c;
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split("");
+    if (c.length === 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = "0x" + c.join("");
+    return (
+      "rgba(" +
+      [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
+      "," +
+      opacity +
+      ")"
+    );
+  }
+}
+
 class PixelEditMenu extends React.Component {
   state = {
     entry: {
@@ -22,6 +40,7 @@ class PixelEditMenu extends React.Component {
     },
   };
   render() {
+    console.log(this.props);
     return (
       <Dialog
         open={true}
@@ -35,10 +54,9 @@ class PixelEditMenu extends React.Component {
           <DialogContent>
             <Slider
               step={1}
-              value={this.state.entry.value}
               min={1}
-              max={this.props.range.max}
-              marks
+              max={this.props.maxValue}
+              defaultValue={1}
               onChange={(e, v) => {
                 this.setState((prevState) => ({
                   entry: { ...prevState.entry, value: v },
@@ -48,13 +66,19 @@ class PixelEditMenu extends React.Component {
           </DialogContent>
           <DialogContent>
             <Box
-              boxShadow={2}
+              boxShadow={3}
               display="flex"
               p={this.state.entry.value < 0 ? 2 : 3}
               justifyContent="center"
               alignItems="center"
-              style={{ backgroundColor: this.props.color }}
+              style={{
+                backgroundColor: hexToRgba(
+                  this.props.color,
+                  this.state.entry.value / this.props.maxValue
+                ),
+              }}
             >
+              {" "}
               <Box>{this.state.entry.value < 0 ? "BRAK" : ""}</Box>
             </Box>
           </DialogContent>
