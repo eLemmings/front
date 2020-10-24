@@ -51,7 +51,15 @@ class PixelAddMenu extends React.Component {
       >
         <DialogTitle>Dodaj wpis do dziennika</DialogTitle>
         <DialogContent>
-          <DialogContentText>Wartość:</DialogContentText>
+          <DialogContentText>
+            Wartość:
+            {typeof this.state.entry.value === "number"
+              ? `${(
+                  ((this.state.entry.value - 1) / (this.props.diary.max - 1)) *
+                  100
+                ).toFixed(0)}%`
+              : "0%"}
+          </DialogContentText>
           <DialogContent>
             <Slider
               step={1}

@@ -48,6 +48,9 @@ const RegisterView = (props) => {
       .then((data) => {
         if (data.code === 200) {
           history.push("/");
+        } else if (parseInt(String(data.code).charAt(0)) === 4) {
+          setSnackbarContent(`wpis ${data.description}`);
+          setSnackbarToggle(true);
         } else {
           setSnackbarContent(
             `${Object.keys(data)[0]}: ${data[Object.keys(data)[0]]}`

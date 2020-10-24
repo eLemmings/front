@@ -16,6 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import Menu from "../components/Menu";
 import Form from "../components/Form";
+import Snackbar from "@material-ui/core/Snackbar";
 
 class DiaryView extends React.Component {
   constructor(props) {
@@ -30,9 +31,11 @@ class DiaryView extends React.Component {
     activeEntry: 0,
     pixelEditOpened: false,
     pixelAddOpened: false,
-    sliderValue: 12,
+    sliderValue: 9,
     isAddDiaryFormActive: false,
     isEditDiaryActive: true,
+    snackbarContent: "",
+    snackbarActive: false,
   };
 
   handleSliderChange = (e, value) => {
@@ -87,7 +90,9 @@ class DiaryView extends React.Component {
   addDiary = (e, diary) => {
     e.preventDefault();
     diary.name =
-      diary.name === "" ? `dziennik${this.state.activeDiary + 1}` : diary.name;
+      diary.name === ""
+        ? `dziennik${this.state.diaries.length + 1}`
+        : diary.name;
     if (this.state.isEditDiaryActive) {
       const diariesCopy = this.state.diaries;
       diariesCopy[this.state.activeDiary].name = diary.name;
@@ -95,12 +100,16 @@ class DiaryView extends React.Component {
       diariesCopy[this.state.activeDiary].max = diary.max;
       this.setState({ diaries: diariesCopy, isEditDiaryActive: false });
     } else {
-      this.setState((prevState) => ({
-        diaries: [...prevState.diaries, diary],
-        activeDiary: this.state.diaries.length,
-      }));
+      this.setState(
+        (prevState) => ({
+          diaries: [...prevState.diaries, diary],
+          activeDiary: this.state.diaries.length,
+        }),
+        () => {
+          this.api.updateUserData({ diaries: this.state.diaries });
+        }
+      );
     }
-    this.api.updateUserData({ diaries: this.state.diaries });
   };
 
   updateEntry = (entry) => {
@@ -123,6 +132,10 @@ class DiaryView extends React.Component {
 
   chooseDiary = (index) => {
     this.setState({ activeDiary: index });
+  };
+
+  snackbarToggle = (isActive) => {
+    this.setState({ snackbarActive: isActive });
   };
 
   render() {
@@ -148,6 +161,13 @@ class DiaryView extends React.Component {
     else
       return (
         <div className={styles.wrapper}>
+          <Snackbar
+            open={this.state.snackbarActive}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            autoHideDuration={6000}
+            onClose={() => this.snackbarToggle(false)}
+            message={<div>{this.state.snackbarContent}</div>}
+          ></Snackbar>
           <TopBar
             handleChangeFn={this.changeDiary}
             diaries={this.state.diaries}
@@ -255,12 +275,21 @@ class DiaryView extends React.Component {
                                   diariesCopy.splice(this.state.activeDiary, 1);
                                   this.setState((prevState) => ({
                                     diaries: diariesCopy,
-                                    activeDiary: prevState.activeDiary - 1,
+                                    // activeDiary:
+                                    //   prevState.activeDiary - 1 < 0
+                                    //     ? prevState.activeDiary + 1
+                                    //     : prevState.activeDiary - 1,
                                   }));
                                   this.api.updateUserData({
                                     diaries: this.state.diaries,
                                   });
                                   this.toggleMenu();
+                                } else {
+                                  this.setState({
+                                    snackbarActive: true,
+                                    snackbarContent:
+                                      "Nie można usunać ostatniego dziennika!",
+                                  });
                                 }
                               }}
                               style={{
@@ -289,6 +318,10 @@ class DiaryView extends React.Component {
                                         data.code
                                     );
                                   });
+                                this.setState({
+                                  snackbarActive: true,
+                                  snackbarContent: "Link kopiowano do schowka",
+                                });
                               }}
                               style={{
                                 color: "#ffffff",

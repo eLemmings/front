@@ -1,12 +1,12 @@
 export class API {
   constructor() {
-		let origin = window.location.origin;
+    let origin = window.location.origin;
     let hostname = window.location.hostname;
     let port = window.location.port;
-		this.url =
-			hostname == "localhost" && port == '3000'
-				? (this.url = "http://localhost:5000")
-				: (this.url = origin + "/api");
+    this.url =
+      hostname === "localhost" && port === "3000"
+        ? (this.url = "http://localhost:5000")
+        : (this.url = origin + "/api");
   }
 
   createRequest(endpoint, method, body) {
@@ -55,7 +55,7 @@ export class API {
   }
 
   createShare(id) {
-    return this.createRequest("share", "PUT", {index: id});
+    return this.createRequest("share", "PUT", { index: id });
   }
 
   getUserShares() {
