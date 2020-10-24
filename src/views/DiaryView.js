@@ -100,6 +100,7 @@ class DiaryView extends React.Component {
         activeDiary: this.state.diaries.length,
       }));
     }
+    console.log(this.state.diaries);
     this.api.updateUserData({ diaries: this.state.diaries }); // ??? nie działa
   };
 
@@ -279,7 +280,10 @@ class DiaryView extends React.Component {
                               fullWidth
                               color="primary"
                               onClick={() => {
-                                console.log("sharing data");
+                                console.log(this.state.activeDiary);
+                                this.api.createShare(this.state.activeDiary).then((data) => {
+                                  navigator.clipboard.writeText(window.location.origin+"/share/"+data.code);
+                                });
                               }}
                               style={{
                                 color: "#ffffff",

@@ -49,7 +49,7 @@ export class API {
   }
 
   createShare(id) {
-    return this.createRequest("share", "PUT", id);
+    return this.createRequest("share", "PUT", {index: id});
   }
 
   getUserShares() {
