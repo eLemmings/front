@@ -1,6 +1,12 @@
 export class API {
   constructor() {
-    this.url = "http://localhost:5000";
+		let origin = window.location.origin;
+    let hostname = window.location.hostname;
+    let port = window.location.port;
+		this.url =
+			hostname == "localhost" && port == '3000'
+				? (this.url = "http://localhost:5000")
+				: (this.url = origin + "/api");
   }
 
   createRequest(endpoint, method, body) {
