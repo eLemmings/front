@@ -81,7 +81,7 @@ class DiaryView extends React.Component {
 
   addEntry = (entry) => {
     this.state.diaries[this.state.activeDiary].entries.push(entry);
-    this.api.updateUserData({ diaries: this.state.diaries }); // Działa
+    this.api.updateUserData({ diaries: this.state.diaries });
   };
 
   addDiary = (e, diary) => {
@@ -100,8 +100,7 @@ class DiaryView extends React.Component {
         activeDiary: this.state.diaries.length,
       }));
     }
-    console.log(this.state.diaries);
-    this.api.updateUserData({ diaries: this.state.diaries }); // ??? nie działa
+    this.api.updateUserData({ diaries: this.state.diaries });
   };
 
   updateEntry = (entry) => {
@@ -281,9 +280,15 @@ class DiaryView extends React.Component {
                               color="primary"
                               onClick={() => {
                                 console.log(this.state.activeDiary);
-                                this.api.createShare(this.state.activeDiary).then((data) => {
-                                  navigator.clipboard.writeText(window.location.origin+"/share/"+data.code);
-                                });
+                                this.api
+                                  .createShare(this.state.activeDiary)
+                                  .then((data) => {
+                                    navigator.clipboard.writeText(
+                                      window.location.origin +
+                                        "/share/" +
+                                        data.code
+                                    );
+                                  });
                               }}
                               style={{
                                 color: "#ffffff",

@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { API } from "../API";
 // import { getCookie, setCookie } from "../API";
 import Box from "@material-ui/core/Box";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -40,19 +41,36 @@ const LoginView = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [snackbarToggle, setSnackbarToggle] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const Api = new API();
     Api.loginUser(email, password).then((data) => {
-      // setCookie("token", data.token, 3);
-      history.push("/diaries");
+      if (Object.keys(data)[0] === "token") history.push("/diaries");
+      if (data.code) {
+        setSnackbarContent(data.description);
+        setSnackbarToggle(true);
+      } else {
+        setSnackbarContent(
+          `${Object.keys(data)[0]}: ${data[Object.keys(data)[0]]}`
+        );
+        setSnackbarToggle(true);
+      }
     });
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <Snackbar
+        open={snackbarToggle}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarToggle(false)}
+        message={<div>{snackbarContent}</div>}
+      ></Snackbar>
       <Grid
         container
         direction="column"

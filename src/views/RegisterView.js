@@ -10,6 +10,7 @@ import Logo from "../components/Logo";
 import { API } from "../API";
 import { useHistory } from "react-router-dom";
 import Box from "@material-ui/core/Box";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -31,29 +32,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterView = () => {
+const RegisterView = (props) => {
   const history = useHistory();
   const classes = useStyles();
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [snackbarToggle, setSnackbarToggle] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const Api = new API();
     Api.registerUser(login, email, password)
       .then((data) => {
-        console.log(data);
-        // history.push("/");
+        if (data.code === 200) {
+          history.push("/");
+        } else {
+          setSnackbarContent(
+            `${Object.keys(data)[0]}: ${data[Object.keys(data)[0]]}`
+          );
+          setSnackbarToggle(true);
+        }
       })
       .catch((error) => {
-        console.log(error);
+        setSnackbarContent(error.toString());
       });
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <Snackbar
+        open={snackbarToggle}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        autoHideDuration={8000}
+        onClose={() => setSnackbarToggle(false)}
+        message={<div>{snackbarContent}</div>}
+      ></Snackbar>
       <Grid
         container
         direction="column"
