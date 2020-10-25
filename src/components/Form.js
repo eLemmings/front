@@ -8,7 +8,7 @@ class Form extends React.Component {
     diary: {
       name: "",
       max: 2,
-      color: this.props.edit ? this.props.diary.color : 1,
+      color: this.props.edit ? this.props.diary.color : hslToHex(1, 100, 50),
       entries: [],
     },
   };
