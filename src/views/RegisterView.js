@@ -69,7 +69,7 @@ const RegisterView = (props) => {
     <Container component="main" maxWidth="xs">
       <Snackbar
         open={snackbarToggle}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={8000}
         onClose={() => setSnackbarToggle(false)}
         message={<div>{snackbarContent}</div>}

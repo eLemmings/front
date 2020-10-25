@@ -170,7 +170,7 @@ class DiaryView extends React.Component {
         <div>
           <Snackbar
             open={this.state.snackbarActive}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
             autoHideDuration={6000}
             onClose={() => this.snackbarToggle(false)}
             message={<div>{this.state.snackbarContent}</div>}
@@ -323,7 +323,7 @@ class DiaryView extends React.Component {
                                   });
                                 this.setState({
                                   snackbarActive: true,
-                                  snackbarContent: "Link kopiowano do schowka",
+                                  snackbarContent: "Link skopiowano do schowka",
                                 });
                               }}
                               style={{

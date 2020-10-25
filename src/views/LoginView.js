@@ -66,7 +66,7 @@ const LoginView = () => {
     <Container component="main" maxWidth="xs">
       <Snackbar
         open={snackbarToggle}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={6000}
         onClose={() => setSnackbarToggle(false)}
         message={<div>{snackbarContent}</div>}
