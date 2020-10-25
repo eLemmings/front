@@ -37,12 +37,7 @@ class PixelEditMenu extends React.Component {
         <DialogContent>
           <DialogContentText>
             Wartość:
-            {typeof this.state.entry.value === "number"
-              ? `${(
-                  ((this.state.entry.value - 1) / (this.props.maxValue - 1)) *
-                  100
-                ).toFixed(0)}%`
-              : "0%"}
+            {this.state.entry.value}
           </DialogContentText>
           <DialogContent>
             <Slider

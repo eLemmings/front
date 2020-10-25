@@ -6,8 +6,8 @@ import { hslToHex, getHue } from "../utils";
 class Form extends React.Component {
   state = {
     diary: {
-      name: "",
-      max: 2,
+      name: this.props.edit ? this.props.diary.name : "",
+      max: this.props.edit ? this.props.diary.max : 2,
       color: this.props.edit ? this.props.diary.color : hslToHex(1, 100, 50),
       entries: [],
     },
@@ -58,7 +58,7 @@ class Form extends React.Component {
               color: "#ffffff",
             }}
           >
-            Skala samopoczucia
+            Zakres wartości
           </Typography>
           <Slider
             defaultValue={this.props.edit ? this.props.diary.max : 1}
@@ -73,7 +73,6 @@ class Form extends React.Component {
             }}
           />
         </Box>
-
         <Box mt={3} mb={3}>
           <Typography
             color="primary"

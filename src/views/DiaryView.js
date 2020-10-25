@@ -88,19 +88,32 @@ class DiaryView extends React.Component {
     this.api.updateUserData({ diaries: this.state.diaries });
   };
 
-  addDiary = (e, diary) => {
+  addEditDiary = (e, diary) => {
     e.preventDefault();
     diary.name =
       diary.name === ""
         ? `dziennik${this.state.diaries.length + 1}`
         : diary.name;
     if (this.state.isEditDiaryActive) {
-      const diariesCopy = this.state.diaries;
+      // Jezeli jest edytowany
+      let diariesCopy = this.state.diaries;
+      if (diary.max !== diariesCopy[this.state.activeDiary].max) {
+        diariesCopy[this.state.activeDiary].entries.map((entry, index) => {
+          if (entry.value > diary.max)
+            diariesCopy[this.state.activeDiary].entries[index].value =
+              diary.max;
+          return 1;
+        });
+      }
+
       diariesCopy[this.state.activeDiary].name = diary.name;
       diariesCopy[this.state.activeDiary].color = diary.color;
       diariesCopy[this.state.activeDiary].max = diary.max;
-      this.setState({ diaries: diariesCopy, isEditDiaryActive: false });
+      this.setState({ diaries: diariesCopy, isEditDiaryActive: false }, () => {
+        this.api.updateUserData({ diaries: this.state.diaries });
+      });
     } else {
+      // Jezeli jest dodawany
       this.setState(
         (prevState) => ({
           diaries: [...prevState.diaries, diary],
@@ -224,7 +237,7 @@ class DiaryView extends React.Component {
                           key={0}
                           item={
                             <Form
-                              submitFn={this.addDiary}
+                              submitFn={this.addEditDiary}
                               toggleMenuFn={this.toggleMenu}
                               toggleAddDiaryFormFn={this.toggleAddDiaryForm}
                               edit={this.state.isEditDiaryActive ? true : false}
@@ -311,7 +324,6 @@ class DiaryView extends React.Component {
                               fullWidth
                               color="primary"
                               onClick={() => {
-                                console.log(this.state.activeDiary);
                                 this.api
                                   .createShare(this.state.activeDiary)
                                   .then((data) => {
