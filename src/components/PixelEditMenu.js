@@ -1,46 +1,31 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import TextField from "@material-ui/core/TextField";
-import { Box } from "@material-ui/core";
+import {
+  Box,
+  TextField,
+  Slide,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+  Dialog,
+} from "@material-ui/core";
 import Slider from "../components/Slider";
+import { hexToRgba } from "../utils";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-function hexToRgba(hex, opacity) {
-  var c;
-  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-    c = hex.substring(1).split("");
-    if (c.length === 3) {
-      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-    }
-    c = "0x" + c.join("");
-    return (
-      "rgba(" +
-      [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
-      "," +
-      opacity +
-      ")"
-    );
-  }
-}
-
 class PixelEditMenu extends React.Component {
   state = {
     entry: {
-      value: this.props.colorIndex,
+      value: this.props.entry.value,
       description: this.props.entry.description,
     },
   };
+
   render() {
-    console.log(this.props);
     return (
       <Dialog
         open={true}
@@ -64,7 +49,7 @@ class PixelEditMenu extends React.Component {
               step={1}
               min={1}
               max={this.props.maxValue}
-              defaultValue={1}
+              defaultValue={this.props.entry.value}
               onChange={(e, v) => {
                 this.setState((prevState) => ({
                   entry: { ...prevState.entry, value: v },

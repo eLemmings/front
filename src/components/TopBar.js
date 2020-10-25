@@ -1,10 +1,15 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import { Container, Box, Input } from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import {
+  Container,
+  Box,
+  Input,
+  Grid,
+  makeStyles,
+  MenuItem,
+  FormControl,
+  Select,
+  IconButton,
+} from "@material-ui/core";
 import ArrowForwardRoundedIcon from "@material-ui/icons/ArrowForwardRounded";
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 
@@ -35,10 +40,9 @@ const TopBar = (props) => {
           <div className={classes.wrapper}>
             <Grid container alignItems="center" justify="space-between">
               <Grid item>
-                <ArrowBackRoundedIcon
-                  style={{ color: "#ffffff" }}
-                  onClick={() => props.handleChangeFn(-1)}
-                />
+                <IconButton onClick={() => props.handleChangeFn(-1)}>
+                  <ArrowBackRoundedIcon style={{ color: "#ffffff" }} />
+                </IconButton>
               </Grid>
               <Grid>
                 <FormControl className={classes.formControl}>
@@ -62,10 +66,9 @@ const TopBar = (props) => {
                 </FormControl>
               </Grid>
               <Grid item>
-                <ArrowForwardRoundedIcon
-                  style={{ color: "#ffffff" }}
-                  onClick={() => props.handleChangeFn(1)}
-                />
+                <IconButton onClick={() => props.handleChangeFn(1)}>
+                  <ArrowForwardRoundedIcon style={{ color: "#ffffff" }} />
+                </IconButton>
               </Grid>
             </Grid>
           </div>

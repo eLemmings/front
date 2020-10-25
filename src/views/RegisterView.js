@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom";
 import Logo from "../components/Logo";
 import { API } from "../API";
-import { useHistory } from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import Snackbar from "@material-ui/core/Snackbar";
+import {
+  Snackbar,
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Link,
+  TextField,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

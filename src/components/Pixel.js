@@ -1,17 +1,7 @@
 import React from "react";
 import styles from "./scss/Pixel.module.scss";
 import addIcon from "../assets/add.svg";
-
-function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
-    : null;
-}
+import { hexToRgbObject } from "../utils";
 
 class Pixel extends React.Component {
   state = {
@@ -23,7 +13,7 @@ class Pixel extends React.Component {
   };
 
   renderPixel = () => {
-    let c = hexToRgb(this.props.color);
+    let c = hexToRgbObject(this.props.color);
     return (
       <div
         className={styles.pixel}

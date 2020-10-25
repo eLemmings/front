@@ -1,36 +1,21 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import TextField from "@material-ui/core/TextField";
-import { Box } from "@material-ui/core";
+import {
+  Box,
+  TextField,
+  Slide,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+  Dialog,
+} from "@material-ui/core";
 import Slider from "../components/Slider";
+import { hexToRgba } from "../utils";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
-
-function hexToRgba(hex, opacity) {
-  var c;
-  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-    c = hex.substring(1).split("");
-    if (c.length === 3) {
-      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-    }
-    c = "0x" + c.join("");
-    return (
-      "rgba(" +
-      [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
-      "," +
-      opacity +
-      ")"
-    );
-  }
-}
 
 class PixelAddMenu extends React.Component {
   state = {
@@ -41,7 +26,6 @@ class PixelAddMenu extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <Dialog
         open={this.props.active}
@@ -104,7 +88,6 @@ class PixelAddMenu extends React.Component {
           <Button
             color="primary"
             onClick={() => {
-              console.log(this.state.entry);
               this.props.addEntry(this.state.entry);
               this.props.handleClose();
             }}

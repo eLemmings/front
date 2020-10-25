@@ -1,22 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
 
-::-webkit-scrollbar {
-  display: none;
-  width: 0px;
-  background: transparent;
-}
-
-:root {
-  --primary: #fa7f7f;
-  --secondary: #2cc39d;
-}
-
 * {
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-body {
-  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
 }

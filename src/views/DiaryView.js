@@ -1,22 +1,23 @@
 import React from "react";
-import styles from "./scss/DiaryView.module.scss";
 import DiaryGrid from "../components/DiaryGrid";
 import TopBar from "../components/TopBar";
 import PixelEditMenu from "../components/PixelEditMenu";
 import PixelAddMenu from "../components/PixelAddMenu";
 import MenuItem from "../components/MenuItem";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { API, getCookie, setCookie } from "../API";
 import Slider from "../components/Slider";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import AppBar from "@material-ui/core/AppBar";
 import Menu from "../components/Menu";
 import Form from "../components/Form";
-import Snackbar from "@material-ui/core/Snackbar";
+import MenuIcon from "@material-ui/icons/Menu";
+import { API, getCookie, setCookie } from "../API";
+import {
+  Snackbar,
+  AppBar,
+  IconButton,
+  Toolbar,
+  CircularProgress,
+  Divider,
+  Button,
+} from "@material-ui/core";
 
 class DiaryView extends React.Component {
   constructor(props) {
@@ -140,7 +141,12 @@ class DiaryView extends React.Component {
 
   render() {
     if (getCookie("token") !== "") return this.renderAccess();
-    window.location = window.location.origin;
+    return this.renderNoAccess();
+  }
+
+  renderNoAccess() {
+    this.props.history.push("/");
+    return <div>no accesss</div>;
   }
 
   renderAccess() {
@@ -153,6 +159,7 @@ class DiaryView extends React.Component {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            fontFamily: "inherit",
           }}
         >
           <CircularProgress></CircularProgress>
@@ -160,7 +167,7 @@ class DiaryView extends React.Component {
       );
     else
       return (
-        <div className={styles.wrapper}>
+        <div>
           <Snackbar
             open={this.state.snackbarActive}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -270,19 +277,15 @@ class DiaryView extends React.Component {
                               fullWidth
                               color="primary"
                               onClick={() => {
-                                const diariesCopy = this.state.diaries;
-                                if (diariesCopy.length > 1) {
+                                if (this.state.diaries.length > 1) {
+                                  const diariesCopy = [...this.state.diaries];
                                   diariesCopy.splice(this.state.activeDiary, 1);
-                                  this.setState((prevState) => ({
-                                    diaries: diariesCopy,
-                                    // activeDiary:
-                                    //   prevState.activeDiary - 1 < 0
-                                    //     ? prevState.activeDiary + 1
-                                    //     : prevState.activeDiary - 1,
-                                  }));
-                                  this.api.updateUserData({
-                                    diaries: this.state.diaries,
-                                  });
+                                  this.setState(
+                                    { diaries: diariesCopy },
+                                    () => {
+                                      this.setState({ activeDiary: 0 });
+                                    }
+                                  );
                                   this.toggleMenu();
                                 } else {
                                   this.setState({
